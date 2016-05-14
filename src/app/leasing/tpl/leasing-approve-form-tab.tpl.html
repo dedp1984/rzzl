@@ -1,0 +1,162 @@
+<div class="panel-body">
+    <fieldset class="scheduler-border">
+        <legend class="scheduler-border">审批意见</legend>
+        <div class="row">
+            <div class="col-lg-4">
+                <label>经销商及代码：</label>
+                <p class="form-control-static">{{itemapp.jxsid}}</p>
+            </div>
+            <div class="col-lg-4">
+                <label>产品类别：</label>
+                <p class="form-control-static">{{itemapp.producttype}}{{productitem.productseq}}</p>
+            </div>
+            <div class="col-lg-4">
+                <label>建议结果：</label>
+                <select class="form-control" ng-model="itemapprove.jyjg" required>
+                    <option value="1" selected>提高首付</option>
+                    <option value="2">条件性批复－加共借人</option>
+                    <option value="3">同意变更申请</option>
+                    <option value="4">不同意变更</option>
+                    <option value="5">不予批核</option>
+                    <option value="6">通过</option>
+                </select>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-lg-4">
+                <label>承租人1姓名：</label>
+                <p class="form-control-static">{{itemapp.name}}</p>
+            </div>
+            <div class="col-lg-4">
+                <label>承租人证件号码：</label>
+                <p class="form-control-static">{{itemapp.idno}}</p>
+            </div>
+
+            <div class="col-lg-4">
+                <label>放款方式：</label>
+                <select class="form-control" ng-model="itemapprove.fkfs" required disabled>
+                    <option value="1">见证放款</option>
+                    <option value="2">见票放款</option>
+                    <option value="3">无条件放款</option>
+                </select>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-lg-4">
+                <label>承租人2姓名：</label>
+                <p class="form-control-static">{{itemapp.czr2lx=='1'?itemapp.czr2name:''}}</p>
+            </div>
+            <div class="col-lg-4">
+                <label>承租人2证件号码：</label>
+                <p class="form-control-static">{{itemapp.czr2lx=='1'?itemapp.czr2idno:''}}</p>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-lg-4">
+                <label>担保人2姓名：</label>
+                <p class="form-control-static">{{itemapp.czr2lx=='2'?itemapp.czr2name:''}}</p>
+            </div>
+            <div class="col-lg-8">
+                <label>担保人2证件号码：</label>
+                <p class="form-control-static">{{itemapp.czr2lx=='2'?itemapp.czr2idno:''}}</p>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-lg-4">
+                <label>品牌车型：</label>
+                <p class="form-control-static">{{itemapp.ppcx}}</p>
+            </div>
+            <div class="col-lg-4">
+                <label>客户类型：</label>
+                <select class="form-control" ng-model="itemapp.reserver5" required>
+                    <option value="A">A类</option>
+                    <option value="B">B类</option>
+                    <option value="C">C类</option>
+                </select>
+            </div>
+        </div>
+    </fieldset>
+    <fieldset class="scheduler-border">
+        <legend class="scheduler-border">融资基本信息</legend>
+        <table class="table table-striped">
+            <tr>
+                <td>融资项目</td>
+                <td>裸车价</td>
+                <td>GPS费用</td>
+                <td>购置税</td>
+                <td>服务费</td>
+                <td>保险费</td>
+                <td>延保费</td>
+                <td>过户费</td>
+                <td>加装费</td>
+                <td>融资手续费</td>
+            </tr>
+            <tr>
+                <td>价款（元）</td>
+                <td>{{itemapp.lcj}}</td>
+                <td>{{itemapp.gpsfee}}</td>
+                <td>{{itemapp.gzs}}</td>
+                <td>{{itemapp.fwf}}</td>
+                <td>{{itemapp.bxf}}</td>
+                <td>{{itemapp.ybf}}</td>
+                <td>{{itemapp.ghf}}</td>
+                <td>{{itemapp.jzf}}</td>
+                <td>{{itemapp.rzsxf}}</td>
+            </tr>
+            <tr>
+                <td>售价/评估价</td>
+                <td>附加费合计</td>
+                <td>费价比例</td>
+                <td>保证金</td>
+                <td>首付比例/抵押比率</td>
+                <td>首付款</td>
+                <td>融资金额</td>
+                <td>融资期限</td>
+                <td>月供款</td>
+                <td>实放金额</td>
+            </tr>
+            <tr>
+                <td>{{itemapp.pgj}}</td>
+                <td>{{itemapp.fjfhj}}</td>
+                <td>{{itemapp.fjbl}}</td>
+                <td>{{itemapp.bzj}}</td>
+                <td>{{itemapp.sfbl}}</td>
+                <td>{{itemapp.sfk}}</td>
+                <td>{{itemapp.rzje}}</td>
+                <td>{{itemapp.rzqx}}</td>
+                <td>{{itemapp.ygk}}</td>
+                <td>{{itemapp.sfje}}</td>
+            </tr>
+        </table>
+    </fieldset>
+    <div class="row">
+        <div class="col-lg-12">
+            <label for="bcxx">放款附加条件：</label>
+            <textarea class="form-control" rows="5" id="bcxx" placeholder="请输入附件条件" ng-model="itemapprove.fkfjtj" required></textarea>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-lg-12">
+            <label for="bcxx">审核员意见：</label>
+            <textarea class="form-control" rows="5" placeholder="请输入审核员意见" id="bcxx" ng-model="itemapprove.shyyj" required></textarea>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-lg-12">
+            <label for="bcxx">权限人一意见：</label>
+            <textarea class="form-control" rows="3" id="bcxx" placeholder="请输入意见" ng-model="itemapprove.qxr1yj" ng-disabled="itemapp.sqdzt=='待审核'||itemapp.sqdzt=='审核中'||itemapp.sqdzt=='审核退回'" ng-required="itemapp.sqdzt=='待审批'"></textarea>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-lg-12">
+            <label for="bcxx">权限人二意见：</label>
+            <textarea class="form-control" rows="3" id="bcxx" placeholder="请输入意见" ng-model="itemapprove.qxr2yj" ng-disabled="itemapp.sqdzt!='待审批'" ng-required="itemapp.sqdzt=='待审批'"></textarea>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-lg-12">
+            <label for="bcxx">总经理意见：</label>
+            <textarea class="form-control" rows="3" id="bcxx" placeholder="请输入意见" ng-model="itemapprove.zjlyj" ng-disabled="itemapp.sqdzt!='待审批'" ng-required="itemapp.sqdzt=='待审批'&&((itemapp.rzje>=155000.00)||(productitem.productname=='全款再融'))"></textarea>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,57 @@
+<div class="bg-light lter b-b wrapper-md" ng-init="initConfirmStatusData()">
+    <div class="row">
+        <div class="col-sm-4">
+            <div><h1 class="m-n font-thin h4">审批单号：{{id}}</h1></div>
+        </div>
+        <div class="col-sm-8 pull-right">
+                <button type="button" class="btn btn-default pull-right" ng-click="back()"><i class="glyphicon glyphicon-remove"></i>取消</button>
+                <button type="submit" class="btn btn-success pull-right m-r-sm" ng-disabled="app.$invalid" ng-click="commitConfirm()">
+                        <i class="fa  fa-check"></i>发送核准函
+                </button>
+                <button type="submit" class="btn btn-sm btn-info pull-right m-r-sm"  ng-click="printConfirm()">
+                    <i class="fa  fa-print"></i>打印核准函
+                </button>
+                <button type="submit" class="btn btn-sm btn-info pull-right m-r-sm"  ng-click="printApp()">
+                    <i class="fa  fa-print"></i>打印申请单
+                </button>
+                <button type="submit" class="btn btn-sm btn-info pull-right m-r-sm"  ng-click="printCheck()">
+                    <i class="fa  fa-print"></i>打印审核表
+                </button>
+                <button type="submit" class="btn btn-sm btn-info pull-right m-r-sm"  ng-click="printApprove()">
+                    <i class="fa  fa-print"></i>打印审批表
+                </button>
+        </div>
+    </div>
+</div>
+<div class="wrapper-md" >
+    <form name="app">
+        <tabset class="tab-container" ng-init="steps={percent:20, step1:true, step2:false, step3:false,step4:false}">
+            <tab heading="申请单" active="steps.step1" select="steps.percent=30">
+                <form name="sqd">
+                    <div ng-include="'app/leasing/tpl/leasing-app-form-tab.html'">
+                    </div>
+                </form>
+            </tab>
+            <tab heading="审核表"  disabled="step1.$invalid" active="steps.step2" select="steps.percent=30" >
+                <form name="shb">
+                    <div ng-include="'app/leasing/tpl/leasing-check-form-tab.html'">
+                    </div>
+                </form>
+            </tab>
+            <tab heading="审批表"  disabled="step2.$invalid" active="steps.step3" select="steps.percent=30" >
+                <form name="spb">
+                    <div ng-include="'app/leasing/tpl/leasing-approve-form-tab.html'">
+                    </div>
+                </form>
+            </tab>
+            <tab heading="核准函"  disabled="step3.$invalid" active="steps.step4" select="steps.percent=30" >
+                <form name="hzh">
+                    <div ng-include="'app/leasing/tpl/leasing-confirm-form-tab.html'">
+                    </div>
+                </form>
+            </tab>
+
+        </tabset>
+    </form>
+
+</div>

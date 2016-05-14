@@ -1,0 +1,195 @@
+<div class="wrapper-sm" >
+    <div class="row">
+        <div class="panel panel-default"  >
+            <div class="panel-heading">
+                <span class="bg-info pull-right m-t-xs">申请单号:{{itemapp.id}}</span>
+                &nbsp;
+            </div>
+            <div class="panel-body"  id="print-content">
+                <div >
+                    <div class="contractid">
+                        {{itemapp.contractid}}
+                    </div>
+                    <table  class="print-table-contract">
+                        <tr>
+                            <td colspan="5" style="width:50%;font-size: 1px">承租人1(抵押人)信息</td>
+                            <td colspan="5" style="width:50%;font-size: 1px">
+                                <input type="checkbox" ng-checked="itemapp.czr2lx==1"/>承租人2(连带责任保证人)
+                                <input type="checkbox"  ng-checked="itemapp.czr2lx==2"/>担保人信息
+                            </td>
+                        </tr>
+                        <tr>
+                            <td style="width:10%">姓名/企业名称</td>
+                            <td colspan="2" style="width:20%">{{itemapp.name}}</td>
+                            <td style="width:10%">联系电话</td>
+                            <td colspan="1" style="width:10%">{{itemapp.mobile}}</td>
+                            <td style="width:10%">姓名/企业名称</td>
+                            <td colspan="2" style="width:20%">{{itemapp.czr2name}}</td>
+                            <td style="width:10%">联系电话</td>
+                            <td colspan="1" style="width:20%">{{itemapp.czr2mobile}}</td>
+                        </tr>
+                        <tr>
+                            <td style="width:10%">证件类型</td>
+                            <td colspan="4" style="width:40%">
+                                <input type="checkbox" ng-checked="itemapp.idtype==1"/>身份证
+                                <input type="checkbox" ng-checked="itemapp.idtype==2"/>护照
+                                <input type="checkbox" ng-checked="itemapp.idtype==3"/>组织机构代码证
+                            </td>
+                            <td style="width:10%">证件类型</td>
+                            <td colspan="4" style="width:40%">
+                                <input type="checkbox" ng-checked="itemapp.czr2idtype==1"/>身份证
+                                <input type="checkbox" ng-checked="itemapp.czr2idtype==2"/>护照
+                                <input type="checkbox" ng-checked="itemapp.czr2idtype==3"/>组织机构代码证
+                            </td>
+                        </tr>
+                        <tr>
+                            <td style="width:10%">证件号码</td>
+                            <td colspan="4" style="width:40%">{{itemapp.idno}}</td>
+                            <td style="width:10%">证件号码</td>
+                            <td colspan="4" style="width:40%">{{itemapp.czr2idno}}</td>
+                        </tr>
+                        <tr>
+                            <td style="width:10%">联系地址</td>
+                            <td colspan="4" style="width:40%">{{itemapp.xxxdz}}</td>
+                            <td style="width:10%">联系地址</td>
+                            <td colspan="4" style="width:40%">{{itemapp.xxxdz}}</td>
+                        </tr>
+                        <tr>
+                            <td colspan="10">车辆融资项目</td>
+                        </tr>
+                        <tr>
+                            <td style="width: 10%">融资项目</td>
+                            <td style="width: 10%">
+                                <input type="checkbox" ng-checked="itemapp.lcj>0"/>裸车款
+                            </td>
+                            <td style="width: 10%">
+                                <input type="checkbox" ng-checked="itemapp.gzs>0"/>购置税
+                            </td>
+                            <td style="width: 10%">
+                                <input type="checkbox" ng-checked="itemapp.gpsfee>0"/>GPS费用
+                            </td>
+                            <td style="width: 10%">
+                                <input type="checkbox" ng-checked="itemapp.rzsxf>0"/>融资手续费
+                            </td>
+                            <td style="width: 10%">
+                                <input type="checkbox" ng-checked="itemapp.fwf>0"/>服务费
+                            </td>
+                            <td style="width: 10%">
+                                <input type="checkbox" ng-checked="itemapp.ghf>0"/>过户费
+                            </td>
+                            <td style="width: 10%">
+                                <input type="checkbox" ng-checked="itemapp.bxf>0"/>保险费
+                            </td>
+                            <td style="width: 10%">
+                                <input type="checkbox" ng-checked="itemapp.jzf>0"/>加装费
+                            </td>
+                            <td style="width: 10%">
+                                <input type="checkbox" ng-checked="itemapp.ybf>0"/>延保费
+                            </td>
+                        </tr>
+                        <tr>
+                            <td  style="width: 10%">前述融资项目对应款项</td>
+                            <td  style="width: 10%">{{tmplcj}}</td>
+                            <td  style="width: 10%">{{itemapp.gzs}}</td>
+                            <td  style="width: 10%">{{itemapp.gpsfee}}</td>
+                            <td  style="width: 10%">{{itemapp.rzsxf}}</td>
+                            <td  style="width: 10%">{{itemapp.fwf}}</td>
+                            <td  style="width: 10%">{{itemapp.ghf}}</td>
+                            <td  style="width: 10%">{{itemapp.bxf}}</td>
+                            <td  style="width: 10%">{{itemapp.jzf}}</td>
+                            <td  style="width: 10%">{{itemapp.ybf}}</td>
+                        </tr>
+                        <tr>
+                            <td style="width: 10%">车辆总价</td>
+                            <td style="width: 10%">{{clzj}}</td>
+                            <td style="width: 10%">元</td>
+                            <td style="width: 10%"></td>
+                            <td style="width: 10%">其中附加费合计</td>
+                            <td style="width: 10%">{{itemapp.fjfhj}}</td>
+                            <td style="width: 10%">元</td>
+                            <td style="width: 10%">保证金</td>
+                            <td style="width: 10%">{{itemapp.bzj}}</td>
+                            <td style="width: 10%">元</td>
+
+                        </tr>
+                        <tr>
+                            <td style="width: 10%">首付款</td>
+                            <td style="width: 10%">{{itemapp.sfk}}</td>
+                            <td style="width: 10%">元</td>
+                            <td style="width: 10%"></td>
+                            <td style="width: 10%">融资款合计</td>
+                            <td style="width: 10%">{{itemapp.rzje}}</td>
+                            <td style="width: 10%">元</td>
+                            <td style="width: 10%">实放金额</td>
+                            <td style="width: 10%">{{itemapp.sfje}}</td>
+                            <td style="width: 10%">元</td>
+                        </tr>
+                        <tr>
+                            <td style="width: 10%">月租金</td>
+                            <td style="width: 10%">{{itemapp.ygk}}</td>
+                            <td style="width: 10%">元/月</td>
+                            <td style="width: 10%"></td>
+                            <td style="width: 10%">管理费</td>
+                            <td style="width: 10%"></td>
+                            <td style="width: 10%">元/月</td>
+                            <td style="width: 10%">月还款日</td>
+                            <td style="width: 10%"></td>
+                            <td style="width: 10%">日</td>
+                        </tr>
+                        <tr>
+                            <td colspan="10">{{dkphase}}</td>
+                        </tr>
+                        <tr>
+                            <td colspan="10">融资租赁及抵押车辆信息</td>
+                        </tr>
+                        <tr>
+                            <td style="width: 10%">序号</td>
+                            <td style="width: 10%">车牌号</td>
+                            <td  colspan="2" style="width: 20%">品牌及车型</td>
+                            <td  colspan="2" style="width: 20%">车架号</td>
+                            <td  colspan="2" style="width: 20%">发动机号</td>
+                            <td style="width: 10%">车辆颜色</td>
+                            <td style="width: 10%">生产商</td>
+                        </tr>
+                        <tr>
+                            <td style="width: 10%">1</td>
+                            <td style="width: 10%">{{itemapp.cph}}</td>
+                            <td  colspan="2" style="width: 20%">{{itemapp.ppcx}}</td>
+                            <td  colspan="2" style="width: 20%">{{itemapp.cjh}}</td>
+                            <td  colspan="2" style="width: 20%">{{itemapp.fdjh}}</td>
+                            <td style="width: 10%">{{itemapp.clys}}</td>
+                            <td style="width: 10%">{{itemapp.scs}}</td>
+                        </tr>
+                        <tr>
+                            <td colspan="10">注：购买车辆3辆(不含)以上的，车辆主要信息见附件《融资租赁及抵押车辆清单》</td>
+                        </tr>
+                        <tr>
+                            <td colspan="5" style="width:50%">融资款项发放账户<p>承租人确认车辆融资款项委托授权出租人支付到如下账户：</p></td>
+                            <td colspan="5" style="width:50%">月租金还款账户<p>承租人确认并授权委托月租金自动扣款账户为如下账户：</p></td>
+                        </tr>
+                        <tr>
+                            <td style="width:10%">户名</td>
+                            <td colspan="4" style="width:40%">{{account.sysBranch.acctname}}</td>
+                            <td style="width:10%">户名</td>
+                            <td colspan="4" style="width:40%">{{itemapp.name}}</td>
+                        </tr>
+                        <tr>
+                            <td style="width:10%">开户行</td>
+                            <td colspan="4" style="width:40%">{{account.sysBranch.openbankname}}</td>
+                            <td style="width:10%">开户行</td>
+                            <td colspan="4" style="width:40%">{{itemapp.refundbankno}}</td>
+                        </tr>
+                        <tr>
+                            <td style="width:10%">账号</td>
+                            <td colspan="4" style="width:40%">{{account.sysBranch.openbankno}}</td>
+                            <td style="width:10%">账号</td>
+                            <td colspan="4" style="width:40%">{{itemapp.refundacctno}}</td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+
+    </div>
+</div>

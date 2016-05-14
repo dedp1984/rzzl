@@ -1,0 +1,74 @@
+<div class="wrapper-md">
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            经销商管理
+        </div>
+        <div class="row wrapper">
+            <div class="col-sm-5 m-b-xs">
+                <button class="btn btn-sm btn-default" ui-sref="app.sysbranchs.add">
+                    <i class="fa fa-plus"></i>新增</button>
+            </div>
+            <div class="col-sm-4">
+            </div>
+            <div class="col-sm-3">
+                <div class="input-group">
+                    <input type="text" class="input-sm form-control" placeholder="Search">
+                    <span class="input-group-btn">
+                        <button class="btn btn-sm btn-default" type="button">查找</button>
+                    </span>
+                </div>
+            </div>
+        </div>
+        <div class="table-responsive">
+            <table class="table table-striped b-t b-light">
+                <thead>
+                <tr>
+                    <th>经销商编号</th>
+                    <th>经销商名称</th>
+                    <th>经销商电话</th>
+                    <th>经销商地址</th>
+                    <th>经销商简称</th>
+                    <th>操作</th>
+                </tr>
+                </thead>
+                <tbody>
+                    <tr ng-repeat="item in items">
+                        <td>{{item.id}}</td>
+                        <td>{{item.branchname}}</td>
+                        <td>{{item.branchtel}}</td>
+                        <td>{{item.branchaddress}}</td>
+                        <td>{{item.branchalias}}</td>
+                        <td>
+                            <a href="javascript:" ng-click="detail(item.id)">编辑</a>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+            <table class="table" style="margin: 0px; z-index: 99;position: inherit; ">
+                <tfoot>
+                <tr ng-if="paginationInfo.totalItem==0">
+                    <td>
+                        无查询结果
+                    </td>
+                </tr>
+                <tr  ng-if="paginationInfo.totalItem>0">
+                    <td>
+                        <div class="pull-left m-t-lg ">
+                            总共{{paginationInfo.totalItem}}条&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 每页显示：{{paginationInfo.pageSize}}条
+                        </div>
+                    </td>
+                    <td>
+                        <div class="pull-right" style="margin-right: 0px">
+                            <uib-pagination boundary-links="true" total-items="paginationInfo.totalItem" ng-model="paginationInfo.curPage"
+                                            items-per-page="paginationInfo.pageSize" ng-change="pageChanged()"
+                                            previous-text="&lsaquo;" next-text="&rsaquo;" first-text="&laquo;" last-text="&raquo;">
+                            </uib-pagination>
+                        </div>
+                    </td>
+                </tr>
+                </tfoot>
+            </table>
+        </div>
+
+    </div>
+</div>

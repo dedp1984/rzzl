@@ -1,0 +1,108 @@
+<div class="wrapper-md" ng-init="initList()">
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            申请单明细
+        </div>
+        <div class="row wrapper">
+            <div class="col-sm-2">
+                <input type="text" ng-model="vm.id" class="input-sm form-control" placeholder="申请单号">
+            </div>
+            <div class="col-sm-2">
+                <input type="text" ng-model="vm.name" class="input-sm form-control" placeholder="申请人姓名">
+            </div>
+            <div class="col-sm-2">
+                <input type="date" ng-model="vm.sqfqrq" class="input-sm form-control" placeholder="申请日期">
+            </div>
+            <div class="col-sm-2">
+                <select id="sqdzt" class=" input-sm form-control" ng-model="vm.sqdzt">
+                    <option value=""  selected>所有</option>
+                    <option value="未确认">未确认</option>
+                    <option value="待审核">待审核</option>
+                    <option value="待审批">待审批</option>
+                    <option value="待确认">待确认</option>
+                    <option value="审核退回">审核退回</option>
+                    <option value="审批退回">审批退回</option>
+                    <option value="审批拒绝">审批拒绝</option>
+                    <option value="待签约">待签约</option>
+                    <option value="已打印">已打印</option>
+                    <option value="已锁定">已锁定</option>
+                </select>
+            </div>
+            <div class="col-sm-2">
+                <div class="input-group">
+                    <span class="input-group-btn">
+                        <button class="btn btn-sm btn-default" type="button" ng-click="query()"><i class="fa fa-search m-r-sm"></i>查找</button>
+                    </span>
+                    <span  class="input-group-btn">
+                         <button class="btn btn-sm btn-primary m-l-lg" ui-sref="app.leasingapps.add"><i class="fa fa-plus-circle m-r-sm"></i>新增</button>
+                    </span>
+                </div>
+            </div>
+        </div>
+        <div class="table-responsive">
+            <table class="table table-striped b-t b-light">
+                <thead>
+                <tr>
+                    <th>申请单编号</th>
+                    <th>姓名</th>
+                    <th>融资金额</th>
+                    <th>融资期限</th>
+                    <th>状态</th>
+                    <th>申请时间</th>
+                    <th>操作</th>
+                </tr>
+                </thead>
+                <tbody>
+                    <tr ng-repeat="item in items">
+                        <td>{{item.id}}</td>
+                        <td>{{item.name}}</td>
+                        <td>{{item.rzje}}</td>
+                        <td>{{item.rzqx}}</td>
+                        <td ng-switch on="item.sqdzt">
+                                <span ng-switch-when="审批拒绝">
+                                     <a href="javascript:"  ng-click="showRejectReason(item.id)">审批拒绝<i class="fa fa-exclamation-circle"></i></a>
+                                </span>
+                                <span ng-switch-when="审核退回">
+                                     <a href="javascript:"  ng-click="showCheckRejectReasion(item.id)">审核退回<i class="fa fa-exclamation-circle"></i></a>
+                                </span>
+                                <span ng-switch-default>
+                                       {{item.sqdzt}}
+                                </span>
+                        </td>
+                        <td>{{item.sqfqsj | mysqlDatetime}}</td>
+                        <td>
+                            <a ui-sref="app.leasingapps.detail({id:item.id})"><i class="fa fa-eye"></i>查看申请单</a>
+                            <a ui-sref="app.leasingapps.confirm({id:item.id})" ng-if="item.sqdzt=='待签约'||item.sqdzt=='已打印'||item.sqdzt=='已锁定'">打印核准函</a>
+                            <a ui-sref="app.leasingapps.contract({id:item.id})" ng-if="item.sqdzt=='待签约'||item.sqdzt=='已打印'||item.sqdzt=='已锁定'">打印合同</a>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+            <table class="table" style="margin: 0px; z-index: 99;position: inherit; ">
+                <tfoot>
+                    <tr ng-if="paginationInfo.totalItem==0">
+                        <td>
+                            无查询结果
+                        </td>
+                    </tr>
+                    <tr  ng-if="paginationInfo.totalItem>0">
+                        <td>
+                            <div class="pull-left m-t-lg ">
+                                总共{{paginationInfo.totalItem}}条&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 每页显示：{{paginationInfo.pageSize}}条
+                            </div>
+                        </td>
+                        <td>
+                            <div class="pull-right" style="margin-right: 0px">
+                                <uib-pagination boundary-links="true" total-items="paginationInfo.totalItem" ng-model="paginationInfo.curPage"
+                                                items-per-page="paginationInfo.pageSize" ng-change="pageChanged()"
+                                                max-size="paginationInfo.maxSize" boundary-link-numbers="true" rotate="false"
+                                                previous-text="&lsaquo;" next-text="&rsaquo;" first-text="&laquo;" last-text="&raquo;">
+                                </uib-pagination>
+                            </div>
+                        </td>
+                    </tr>
+                </tfoot>
+            </table>
+        </div>
+    </div>
+</div>

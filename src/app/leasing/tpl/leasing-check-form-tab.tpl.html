@@ -1,0 +1,316 @@
+<div class="panel-body">
+    <fieldset class="scheduler-border">
+        <legend class="scheduler-border">基本信息</legend>
+        <div class="row">
+            <div class="col-lg-4">
+                <label for="name">姓名：</label>
+                <input type="text" class="form-control" id="name" ng-model="itemapp.name" required/>
+            </div>
+            <div class="col-lg-4">
+                <label for="idno">证件号码:</label>
+                <input type="text" class="form-control" id="idno" ng-model="itemapp.idno" required/>
+            </div>
+            <div class="col-lg-4">
+                <label for="hyzk">婚姻状况:</label>
+                <select id="education" class="form-control" ng-model="itemapp.hyzk" required>
+                    <option value="1">未婚</option>
+                    <option value="2">已婚</option>
+                    <option value="3">离异</option>
+                    <option value="4">丧偶</option>
+                </select>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-lg-8">
+                <label for="lxrqrqk">联系人确认情况：</label>
+                <input type="text" class="form-control" id="lxrqrqk" ng-model="itemcheck.lxrqrzk" required/>
+            </div>
+            <div class="col-lg-4">
+                <label for="fmxx">负面信息:</label>
+                <input type="text" class="form-control" id="fmxx" ng-model="itemcheck.fmxx"/>
+            </div>
+        </div>
+    </fieldset>
+    <fieldset class="scheduler-border">
+        <legend class="scheduler-border">工作信息</legend>
+        <div class="row">
+            <div class="col-lg-4">
+                <label for="dwmc">单位名称：</label>
+                <input type="text" class="form-control" id="dwmc" ng-model="itemapp.czr1dwmc" required/>
+            </div>
+            <div class="col-lg-4">
+                <label for="xyw">信用网:</label>
+                <select id="zsss" class="form-control" ng-model="itemcheck.xyw" required>
+                    <option value="1">正常</option>
+                    <option value="2">无登记</option>
+                    <option value="3">不一致</option>
+                </select>
+            </div>
+            <div class="col-lg-4">
+                <label for="gzsr">工资收入:</label>
+                <input type="text" class="form-control" id="gzsr" ng-model="itemapp.czr1ysr"/>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-lg-12">
+                <label for="dwdz">单位地址：</label>
+                <input type="text" class="form-control" id="dwdz" ng-model="itemapp.czr1dwdz" required/>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-lg-4">
+                <label for="zw">职位：</label>
+                <input type="text" class="form-control" id="zw" ng-model="itemapp.czr1zwmc" required/>
+            </div>
+            <div class="col-lg-4">
+                <label for="gznx">工作年限:</label>
+                <input type="number" class="form-control" id="gznx" ng-model="itemcheck.gznx" required/>
+            </div>
+            <div class="col-lg-4">
+                <label for="hsdh">核实电话:</label>
+                <input type="text" class="form-control" id="hsdh" ng-model="itemapp.czr1dwdh" required/>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-lg-12">
+                <label for="bcxx">补充信息：</label>
+                <textarea class="form-control" rows="3" id="bcxx" ng-model="itemcheck.bcxx1"></textarea>
+            </div>
+        </div>
+    </fieldset>
+    <fieldset class="scheduler-border">
+        <legend class="scheduler-border">住址信息</legend>
+        <div class="row">
+            <div class="col-lg-12">
+                <label for="xzz">现住址：</label>
+                <input type="text" class="form-control" id="xzz" ng-model="itemapp.xxxdz" required/>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-lg-4">
+                <label for="zzxs">住址形式：</label>
+                <select id="zsss" class="form-control" ng-model="itemapp.zsqs" required>
+                    <option value="1">自有</option>
+                    <option value="2">亲属所有</option>
+                    <option value="3">租房</option>
+                    <option value="4">宿舍</option>
+                </select>
+            </div>
+            <div class="col-lg-4">
+                <label for="ygk">月供款/租金：</label>
+                <input type="text" class="form-control" id="ygk" ng-model="itemcheck.ygk"/>
+            </div>
+            <div class="col-lg-4">
+                <label for="tzrgx">同住人关系：</label>
+                <input type="text" class="form-control" id="tzrgx" ng-model="itemcheck.tzrgx"/>
+            </div>
+            <div class="row">
+                <div class="col-lg-12">
+                    <label for="bcxx">补充信息：</label>
+                    <textarea class="form-control" rows="3" id="bcxx" ng-model="itemcheck.bcxx2"></textarea>
+                </div>
+            </div>
+        </div>
+    </fieldset>
+    <fieldset class="scheduler-border">
+        <legend class="scheduler-border">资产信息</legend>
+        <div ng-if="itemapp.fcdz1!=null" name="房产一信息">
+            <div class="row">
+                <div class="col-lg-12">
+                    <label for="fcdz1">房产一地址：</label>
+                    <input type="text" class="form-control" id="fcdz1" ng-model="itemapp.fcdz1"/>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-lg-12">
+                    <table class="table table-striped">
+                        <tr>
+                            <td>产权情况</td>
+                            <td>房屋状态</td>
+                            <td>建筑面积</td>
+                            <td>贷款金额</td>
+                            <td>贷款余额</td>
+                            <td>月供款</td>
+                            <td>评估价</td>
+                        </tr>
+                        <tr>
+                            <td><input type="text" class="form-control"  style="width: 100px" ng-model="itemcheck.cqqk1"/> </td>
+                            <td><select id="fczt2" class="form-control" style="width: 100px" ng-model="itemapp.fczt1">
+                                <option value="1">按揭</option>
+                                <option value="2">抵押</option>
+                                <option value="3">全款</option>
+                            </select></td>
+                            <td><input type="text" class="form-control"  style="width: 100px" ng-model="itemcheck.jzmj1"/> </td>
+                            <td><input type="number" class="form-control"  style="width: 100px" ng-model="itemcheck.dkje1"/> </td>
+                            <td><input type="number" class="form-control"  style="width: 100px" ng-model="itemcheck.dkye1"/> </td>
+                            <td><input type="number" class="form-control"  style="width: 100px" ng-model="itemcheck.ygk1"/> </td>
+                            <td><input type="number" class="form-control"  style="width: 100px" ng-model="itemcheck.pgj1"/> </td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-lg-12">
+                    <label for="bcxx">补充信息：</label>
+                    <textarea class="form-control" rows="3" id="bcxx" ng-model="itemcheck.fcbcsm1"></textarea>
+                </div>
+            </div>
+        </div>
+        <div  ng-if="itemapp.fcdz2!=null" name="房产二信息">
+            <div class="row">
+                <div class="col-lg-12">
+                    <label for="fcdz1">房产二地址：</label>
+                    <input type="text" class="form-control"  ng-model="itemapp.fcdz2"/>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-lg-12">
+                    <table class="table table-striped">
+                        <tr>
+                            <td>产权情况</td>
+                            <td>房屋状态</td>
+                            <td>建筑面积</td>
+                            <td>贷款金额</td>
+                            <td>贷款余额</td>
+                            <td>月供款</td>
+                            <td>评估价</td>
+                        </tr>
+                        <tr>
+                            <td><input type="text" class="form-control"  style="width: 100px" ng-model="itemcheck.cqqk2"/> </td>
+                            <td><select id="fczt2" class="form-control" style="width: 100px" ng-model="itemapp.fczt2">
+                                <option value="1">按揭</option>
+                                <option value="2">抵押</option>
+                                <option value="3">全款</option>
+                            </select></td>
+                            <td><input type="text" class="form-control"  style="width: 100px" ng-model="itemcheck.jzmj2"/> </td>
+                            <td><input type="number" class="form-control"  style="width: 100px" ng-model="itemcheck.dkje2"/> </td>
+                            <td><input type="number" class="form-control"  style="width: 100px" ng-model="itemcheck.dkye2"/> </td>
+                            <td><input type="number" class="form-control"  style="width: 100px" ng-model="itemcheck.ygk2"/> </td>
+                            <td><input type="number" class="form-control"  style="width: 100px" ng-model="itemcheck.pgj2"/> </td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-lg-12">
+                    <label for="bcxx">补充信息：</label>
+                    <textarea class="form-control" rows="3" id="bcxx" ng-model="itemcheck.fcbcsm2"></textarea>
+                </div>
+            </div>
+        </div>
+        <div name="车产信息" ng-if="itemapp.ccpp!=null">
+            <div class="row">
+                <div class="col-lg-12">
+                    <table class="table table-striped">
+                        <tr>
+                            <td>车辆-品牌</td>
+                            <td>购买价格</td>
+                            <td>购买时间</td>
+                            <td>是否抵押</td>
+                            <td>贷款金额</td>
+                            <td>月供款</td>
+                            <td>评估价</td>
+                        </tr>
+                        <tr>
+                            <td><input type="text" class="form-control"  style="width: 100px" ng-model="itemapp.ccpp"/> </td>
+                            <td><input type="text" class="form-control"  style="width: 100px" ng-model="itemcheck.gmjg"/> </td>
+                            <td><input type="text" class="form-control"  style="width: 100px" ng-model="itemcheck.gmsj"/> </td>
+                            <td>
+                                <select id="cczt" style="width: 100px" class="form-control" ng-model="itemapp.cczt">
+                                    <option value="1">按揭</option>
+                                    <option value="2">抵押</option>
+                                    <option value="3">全款</option>
+                                </select>
+                            </td>
+                            <td><input type="text" class="form-control"  style="width: 100px" ng-model="itemcheck.qcdkje"/> </td>
+                            <td><input type="text" class="form-control"  style="width: 100px" ng-model="itemcheck.qcygk"/> </td>
+                            <td><input type="text" class="form-control"  style="width: 100px" ng-model="itemcheck.qcpgj"/> </td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-lg-12">
+                    <label for="bcxx">补充信息：</label>
+                    <textarea class="form-control" rows="3" id="bcxx" ng-model="itemcheck.qcbcsm"></textarea>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-lg-12">
+                    <label for="bcxx">其他资产说明：</label>
+                    <textarea class="form-control" rows="3" id="bcxx" ng-model="itemcheck.qtzcsm"></textarea>
+                </div>
+            </div>
+        </div>
+    </fieldset>
+    <fieldset class="scheduler-border">
+        <legend class="scheduler-border">收支情况</legend>
+        <div class="row">
+            <div class="col-lg-12">
+                <fieldset class="scheduler-border">
+                    <legend class="scheduler-border">收入</legend>
+                    <table class="table table-striped">
+                        <tr>
+                            <td style="width: 100px">固定工资</td>
+                            <td style="width: 200px">年终奖/12</td>
+                            <td style="width: 100px">副业收入</td>
+                            <td style="width: 100px">配偶收入</td>
+                            <td style="width: 100px">其他收入</td>
+                            <td style="width: 100px">合计：</td>
+                        </tr>
+                        <tr>
+                            <td><input type="text" class="form-control"  style="width: 100px" ng-model="itemcheck.gdgz"/> </td>
+                            <td><input type="text" class="form-control"  style="width: 200px"   ng-model="itemcheck.nzj"/> </td>
+                            <td><input type="text" class="form-control"  style="width: 100px"  ng-model="itemcheck.fysr"/> </td>
+                            <td><input type="text" class="form-control"  style="width: 100px"  ng-model="itemcheck.posr"/> </td>
+                            <td><input type="text" class="form-control"  style="width: 100px"  ng-model="itemcheck.qtsr"/> </td>
+                            <td><input type="text" class="form-control"  style="width: 100px" ng-model="itemcheck.srhj" disabled/> </td>
+                        </tr>
+                    </table>
+                </fieldset>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-lg-12">
+                <fieldset class="scheduler-border">
+                    <legend class="scheduler-border">支出</legend>
+                    <table class="table table-striped">
+                        <tr>
+                            <td style="width: 100px">抵押贷款</td>
+                            <td style="width: 200px">信用贷款（小贷p2p担保类）+信用卡</td>
+                            <td style="width: 100px">房租+房贷</td>
+                            <td style="width: 100px">日常开支</td>
+                            <td style="width: 100px">其他</td>
+                            <td style="width: 100px">合计：</td>
+                        </tr>
+                        <tr>
+                            <td><input type="text" class="form-control"  style="width: 100px"  ng-model="itemcheck.dydk"/> </td>
+                            <td><input type="text" class="form-control"  style="width: 200px" ng-model="itemcheck.xydk"/> </td>
+                            <td><input type="text" class="form-control"  style="width: 100px"  ng-model="itemcheck.fzfd"/> </td>
+                            <td><input type="text" class="form-control"  style="width: 100px"  ng-model="itemcheck.rckz"/> </td>
+                            <td><input type="text" class="form-control"  style="width: 100px"  ng-model="itemcheck.qtkz"/> </td>
+                            <td><input type="text" class="form-control"  style="width: 100px"  ng-model="itemcheck.zchj" disabled/> </td>
+                        </tr>
+                        <tr>
+                            <td>本次车贷月供</td>
+                            <td >{{itemapp.ygk}}</td>
+                            <td style="color:red">{{hknlts}}</td>
+                            <td colspan="2">月盈余：</td>
+                            <td>{{yyu}}</td>
+                        </tr>
+                    </table>
+                </fieldset>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-lg-12">
+                <label for="bcxx">情况说明：</label>
+                <textarea class="form-control" rows="3" id="bcxx" ng-model="itemcheck.szqksm"></textarea>
+            </div>
+        </div>
+    </fieldset>
+    <fieldset class="scheduler-border">
+        <legend class="scheduler-border">其他信息</legend>
+        <textarea class="form-control" rows="3" id="bcxx" ng-model="itemcheck.qtsm"></textarea>
+    </fieldset>
+</div>

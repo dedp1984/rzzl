@@ -1,0 +1,162 @@
+<div class="wrapper-md" >
+    <div class="row">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <span class=" pull-right m-b-md">申请单号:{{itemapp.id}}</span>
+                &nbsp;
+            </div>
+            <div class="panel-body">
+                <div >
+                    <h2 style="text-align: center;">核准通知函</h2>
+                    <hr/>
+                    <p>尊敬的{{itemapp.sysBranch.branchname}}</p>
+                    <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;感谢贵公司提交客户“{{itemapp.name}}”的租赁申请，
+                        该项租赁申请，经审已被核准，具体核准日期为：{{itemapp.confirmdate}}。敬请确认以下信息，如有错误请务必及时告知。本核准函有效期为60日（自核准日次日起算）。十分感谢您的支持！</p>
+                    <table class="print-table" cellspacing="0">
+                        <tr>
+                            <td  colspan="6" class="print-table title">申请人信息</td>
+                        </tr>
+                        <tr>
+                            <td style="width: 10%" >承租人1</td>
+                            <td style="width: 15%">{{itemapp.name}}</td>
+                            <td style="width: 10%">证件号码</td>
+                            <td style="width: 15%">{{itemapp.idno}}</td>
+                            <td style="width: 10%">联系电话</td>
+                            <td style="width: 10%">{{itemapp.mobile}}</td>
+                        </tr>
+                        <tr>
+                            <td>承租人2</td>
+                            <td>{{itemapp.czr2lx=='1'?itemapp.czr2name:''}}</td>
+                            <td>证件号码</td>
+                            <td>{{itemapp.czr2lx=='1'?itemapp.czr2idno:''}}</td>
+                            <td>联系电话</td>
+                            <td>{{itemapp.czr2lx=='1'?itemapp.czr2mobile:''}}</td>
+                        </tr>
+                        <tr>
+                            <td>担保人</td>
+                            <td>{{itemapp.czr2lx=='2'?itemapp.czr2name:''}}</td>
+                            <td>证件号码</td>
+                            <td>{{itemapp.czr2lx=='2'?itemapp.czr2idno:''}}</td>
+                            <td>联系电话</td>
+                            <td>{{itemapp.czr2lx=='2'?itemapp.czr2mobile:''}}</td>
+                        </tr>
+                    </table>
+                    <table class="print-table" cellspacing="0">
+                        <tr>
+                            <td colspan="6" class="print-table title">车辆信息</td>
+                        </tr>
+                        <tr>
+                            <td colspan="2">品牌型号</td>
+                            <td>颜色</td>
+                            <td>生产商</td>
+                            <td>车架号</td>
+                            <td>发动机号</td>
+                        </tr>
+                        <tr>
+                            <td colspan="2">{{itemapp.ppcx}}</td>
+                            <td>{{itemapp.clys}}</td>
+                            <td>{{itemapp.scs}}</td>
+                            <td>{{itemapp.cjh}}</td>
+                            <td>{{itemapp.fdjh}}</td>
+                        </tr>
+                    </table>
+                    <table class="print-table" cellspacing="0">
+                        <tr>
+                            <td  colspan="11" class="print-table title firsttd">融资信息</td>
+                        </tr>
+                        <tr>
+                            <td>融资项目</td>
+                            <td>裸车价</td>
+                            <td>GPS费用</td>
+                            <td>购置税</td>
+                            <td>服务费</td>
+                            <td>保险费</td>
+                            <td>延保费</td>
+                            <td>过户费</td>
+                            <td>加装费</td>
+                            <td>融资手续费</td>
+                            <td>附加费合计</td>
+                        </tr>
+                        <tr>
+                            <td>价款(元)</td>
+                            <td>{{itemapp.lcj}}</td>
+                            <td>{{itemapp.gpsfee}}</td>
+                            <td>{{itemapp.gzs}}</td>
+                            <td>{{itemapp.fwf}}</td>
+                            <td>{{itemapp.bxf}}</td>
+                            <td>{{itemapp.ybf}}</td>
+                            <td>{{itemapp.ghf}}</td>
+                            <td>{{itemapp.jzf}}</td>
+                            <td>{{itemapp.rzsxf}}</td>
+                            <td>{{itemapp.fjfhj}}</td>
+                        </tr>
+                        <tr>
+                            <td colspan="2">首付比例/抵押比率</td>
+                            <td>首付款</td>
+                            <td>利率</td>
+                            <td>保证金</td>
+                            <td>融资金额</td>
+                            <td>融资期限</td>
+                            <td>月租金</td>
+                            <td>还款方式</td>
+                            <td colspan="2">约定还款日</td>
+                        </tr>
+                        <tr>
+                            <td colspan="2">{{itemapp.sfbl}}</td>
+                            <td>{{itemapp.sfk}}</td>
+                            <td>{{productitem.rate}}</td>
+                            <td>{{itemapp.bzj}}</td>
+                            <td>{{itemapp.rzje}}</td>
+                            <td>{{itemapp.rzqx}}</td>
+                            <td>{{itemapp.ygk}}</td>
+                            <td>银联代扣</td>
+                            <td colspan="2">以实际放款日期为准</td>
+                        </tr>
+                        <tr>
+                            <td colspan="11" class="print-table title">放款附加条件</td>
+                        </tr>
+                        <tr>
+                            <td colspan="11">{{itemapprove.fkfjtj}}</td>
+                        </tr>
+                        <tr>
+                            <td colspan="11" style="text-align: left;!important;">
+                                <p>
+                                    重要提示：
+                                </p>
+                                <p>
+                                    1) 如发生承租人所购车辆的净车价、车辆所有人名称变更、承租人或保证人提供虚假信息、不接受调整后融资政策、撤销租赁申请等非潽金原因而导致影响审核结果之情形，则潽金有权视具体情况终止操作该笔租赁业务。
+                                </p>
+                                <p>
+                                    2) 应客户要求，上述租赁申请结果可能发生变更，届时潽金将出具《融资租赁申请核准通知函》，请贵公司以潽金最新出具的版本为准。
+                                </p>
+                                <p>
+                                    3) 本通知函不作为贵公司放车的依据，如果承租人不能履行全部租赁措施，则潽金将拒绝放款，请贵公司谨慎确认交付车辆的时间并承担相应的风险。
+                                </p>
+                            </td>
+
+                        </tr>
+                        <tr>
+                            <td colspan="11" style="text-align: right;!important;">
+                                <p>
+                                    出租人签字/盖章
+                                </p>
+                                <br/>
+                                <p>
+                                    潽金融资租赁有限公司
+                                </p>
+                                <br/>
+                                <p>
+                                    <span style="text-decoration:underline">{{itemapp.confirmdate.substring(0,4)}}</span>年
+                                    <span style="text-decoration:underline">{{itemapp.confirmdate.substring(4,6)}}</span>月
+                                    <span style="text-decoration:underline">{{itemapp.confirmdate.substring(6,8)}}</span>日
+                                </p>
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+
+    </div>
+</div>

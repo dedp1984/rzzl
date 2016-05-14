@@ -1,0 +1,163 @@
+<div class="wrapper-md"  >
+    <div class="row" id="printapprove">
+        <div class="panel panel-default"  id="print-content">
+            <div class="panel-heading" >
+                <img height="20px" src="img/logo.png"/><span class=" pull-right m-b-md">申请单号:{{itemapp.id}}</span>
+                &nbsp;
+            </div>
+            <div class="panel-body">
+                <div>
+                    <br/>
+                    <h3 style="text-align: center;">个人融资租赁审批表</h3>
+                    <br/>
+                    <table class="print-table" cellspacing="0">
+                        <tr>
+                            <td  colspan="10" class="print-table title">审批意见</td>
+                        </tr>
+                        <tr>
+                            <td style="width: 20%" colspan="2">经销商及代码：:</td>
+                            <td style="width:20%" colspan="2">{{itemapp.jxsid}}</td>
+                            <td style="width: 10%">产品类别:</td>
+                            <td colspan="2" style="width: 20%" >{{itemapp.producttype}}{{productitem.productseq}}</td>
+                            <td  style="width: 10%">建议结果:</td>
+                            <td  style="width: 20%" colspan="2">
+                                <select class="form-control" ng-model="itemapprove.jyjg" required>
+                                    <option value="1" selected>提高首付</option>
+                                    <option value="2">条件性批复－加共借人</option>
+                                    <option value="3">同意变更申请</option>
+                                    <option value="4">不同意变更</option>
+                                    <option value="5">不予批核</option>
+                                    <option value="6">通过</option>
+                                </select>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td style="width: 20%" colspan="2">类别</td>
+                            <td style="width:20%" colspan="2">姓名</td>
+                            <td style="width: 30%" colspan="3">证件号码</td>
+                            <td  style="width: 30%" colspan="3">放款方式</td>
+                        </tr>
+                        <tr>
+                            <td style="width: 20%" colspan="2">承租人1</td>
+                            <td style="width:20%" colspan="2">{{itemapp.name}}</td>
+                            <td style="width: 30%" colspan="3">{{itemapp.idno}}</td>
+                            <td  style="width: 30%" colspan="3">
+                                <select class="form-control" ng-model="itemapprove.fkfs" required disabled>
+                                    <option value="1">见证放款</option>
+                                    <option value="2">见票放款</option>
+                                    <option value="3">无条件放款</option>
+                                </select>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td style="width: 20%" colspan="2">承租人2</td>
+                            <td style="width:20%" colspan="2">{{itemapp.czr2lx=='1'?itemapp.czr2name:''}}</td>
+                            <td style="width: 30%" colspan="3">{{itemapp.czr2lx=='1'?itemapp.czr2idno:''}}</td>
+                            <td  style="width: 30%" colspan="3"></td>
+                        </tr>
+                        <tr>
+                            <td style="width: 20%" colspan="2">担保人</td>
+                            <td style="width:20%" colspan="2">{{itemapp.czr2lx=='2'?itemapp.czr2name:''}}</td>
+                            <td style="width: 30%" colspan="3">{{itemapp.czr2lx=='2'?itemapp.czr2idno:''}}</td>
+                            <td  style="width: 30%" colspan="3"></td>
+                        </tr>
+                        <tr>
+                            <td style="width: 20%" colspan="2">品牌车型：</td>
+                            <td style="width:20%" colspan="2">{{itemapp.ppcx}}</td>
+                            <td style="width: 30%" colspan="3">客户类型：</td>
+                            <td  style="width: 30%" colspan="3">
+                                <select class="form-control" ng-model="itemapp.reserver5" required>
+                                    <option value="A">A类</option>
+                                    <option value="B">B类</option>
+                                    <option value="C">C类</option>
+                                </select>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td  colspan="10" class="print-table title">融资基本信息</td>
+                        </tr>
+                        <tr>
+                            <td>融资项目</td>
+                            <td>裸车价</td>
+                            <td>GPS费用</td>
+                            <td>购置税</td>
+                            <td>服务费</td>
+                            <td>保险费</td>
+                            <td>延保费</td>
+                            <td>过户费</td>
+                            <td>加装费</td>
+                            <td>融资手续费</td>
+                        </tr>
+                        <tr>
+                            <td>价款（元）</td>
+                            <td>{{itemapp.lcj}}</td>
+                            <td>{{itemapp.gpsfee}}</td>
+                            <td>{{itemapp.gzs}}</td>
+                            <td>{{itemapp.fwf}}</td>
+                            <td>{{itemapp.bxf}}</td>
+                            <td>{{itemapp.ybf}}</td>
+                            <td>{{itemapp.ghf}}</td>
+                            <td>{{itemapp.jzf}}</td>
+                            <td>{{itemapp.rzsxf}}</td>
+                        </tr>
+                        <tr>
+                            <td>售价/评估价</td>
+                            <td>附加费合计</td>
+                            <td>费价比例</td>
+                            <td>保证金</td>
+                            <td>首付比例/抵押比率</td>
+                            <td>首付款</td>
+                            <td>融资金额</td>
+                            <td>融资期限</td>
+                            <td>月供款</td>
+                            <td>实放金额</td>
+                        </tr>
+
+                        <tr>
+                            <td>{{itemapp.pgj}}</td>
+                            <td>{{itemapp.fjfhj}}</td>
+                            <td>{{itemapp.fjbl}}</td>
+                            <td>{{itemapp.bzj}}</td>
+                            <td>{{itemapp.sfbl}}</td>
+                            <td>{{itemapp.sfk}}</td>
+                            <td>{{itemapp.rzje}}</td>
+                            <td>{{itemapp.rzqx}}</td>
+                            <td>{{itemapp.ygk}}</td>
+                            <td>{{itemapp.sfje}}</td>
+                        </tr>
+                        <tr>
+                            <td  colspan="10" class="print-table title">放款附加条件</td>
+                        </tr>
+                        <tr>
+                            <td  colspan="10">{{itemapprove.fkfjtj}}</td>
+                        </tr>
+                        <tr>
+                            <td  colspan="10" class="print-table title">审核员意见</td>
+                        </tr>
+                        <tr>
+                            <td  colspan="10">{{itemapprove.shyyj}}</td>
+                        </tr>
+                        <tr>
+                            <td  colspan="10" class="print-table title">权限人一意见</td>
+                        </tr>
+                        <tr>
+                            <td  colspan="10">{{itemapprove.qxr1yj}}</td>
+                        </tr>
+                        <tr>
+                            <td  colspan="10" class="print-table title">权限人二意见</td>
+                        </tr>
+                        <tr>
+                            <td  colspan="10">{{itemapprove.qxr2yj}}</td>
+                        </tr>
+                        <tr>
+                            <td  colspan="10" class="print-table title">总经理意见</td>
+                        </tr>
+                        <tr>
+                            <td  colspan="10">{{itemapprove.zjlyj}}</td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

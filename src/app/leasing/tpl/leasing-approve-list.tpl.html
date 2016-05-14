@@ -1,0 +1,80 @@
+<div class="wrapper-md" ng-init="initList()">
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            待审批明细
+        </div>
+        <div class="row wrapper">
+            <div class="col-sm-2">
+                <input type="text" ng-model="vm.id" class="input-sm form-control" placeholder="申请单号">
+            </div>
+            <div class="col-sm-2">
+                <input type="text" ng-model="vm.name" class="input-sm form-control" placeholder="申请人姓名">
+            </div>
+            <div class="col-sm-2">
+                <input type="date" ng-model="vm.sqfqrq" class="input-sm form-control" placeholder="申请日期">
+            </div>
+            <div class="col-sm-2">
+                <div class="input-group">
+                    <span class="input-group-btn">
+                        <button class="btn btn-sm btn-default" type="button" ng-click="query()"><i class="fa fa-search m-r-sm"></i>查找</button>
+                    </span>
+                </div>
+            </div>
+        </div>
+        <div class="table-responsive">
+            <table class="table table-striped b-t b-light">
+                <thead>
+                <tr>
+                    <th>申请单编号</th>
+                    <th>姓名</th>
+                    <th>融资金额</th>
+                    <th>融资期限</th>
+                    <th>状态</th>
+                    <th>申请时间</th>
+                    <th>操作</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr ng-repeat="item in items">
+                    <td>{{item.id}}</td>
+                    <td>{{item.name}}</td>
+                    <td>{{item.rzje}}</td>
+                    <td>{{item.rzqx}}</td>
+                    <td>{{item.sqdzt}}</td>
+                    <td>{{item.sqfqsj | mysqlDatetime}}</td>
+                    <td>
+                        <a ui-sref="app.approve({id:item.id})"><i class="fa fa-copy"></i> 审批</a>
+                    </td>
+
+                </tr>
+                </tbody>
+            </table>
+            <table class="table" style="margin: 0px; z-index: 99;position: inherit; ">
+                <tfoot>
+                <tr ng-if="paginationInfo.totalItem==0">
+                    <td>
+                        无查询结果
+                    </td>
+                </tr>
+                <tr  ng-if="paginationInfo.totalItem>0">
+                    <td>
+                        <div class="pull-left m-t-lg ">
+                            总共{{paginationInfo.totalItem}}条&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 每页显示：{{paginationInfo.pageSize}}条
+                        </div>
+                    </td>
+                    <td>
+                        <div class="pull-right" style="margin-right: 0px">
+                            <uib-pagination boundary-links="true" total-items="paginationInfo.totalItem" ng-model="paginationInfo.curPage"
+                                            items-per-page="paginationInfo.pageSize" ng-change="pageChanged()"
+                                            max-size="paginationInfo.maxSize" boundary-link-numbers="true" rotate="false"
+                                            previous-text="&lsaquo;" next-text="&rsaquo;" first-text="&laquo;" last-text="&raquo;">
+                            </uib-pagination>
+                        </div>
+                    </td>
+                </tr>
+                </tfoot>
+            </table>
+        </div>
+
+    </div>
+</div>

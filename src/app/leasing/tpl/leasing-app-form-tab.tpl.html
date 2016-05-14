@@ -1,0 +1,867 @@
+<div class="panel-body" >
+    <fieldset class="scheduler-border">
+        <legend class="scheduler-border">产品信息</legend>
+
+        <div class="row">
+            <div class="col-lg-4">
+                <label for="producttype">产品类型：</label>
+                <select  class="form-control" id="producttype" ng-change="onProductChange()"  ng-model="itemapp.producttype" ng-options="o.id as o.value for o in products" required>
+                    <option value="">请选择产品类型</option>
+                </select>
+            </div>
+            <div class="col-lg-4">
+                <label for="product">产品：</label>
+                <select  class="form-control" id="product"  ng-change="onSubProductChange()" ng-model="itemapp.productname" ng-options="o.id as o.value for o in subProducts" required>
+                    <option value="">请选择产品</option>
+                </select>
+            </div>
+            <div class="col-lg-4">
+                <label for="rzqx">融资期限：</label>
+                <select  class="form-control" id="product"  ng-model="itemapp.rzqx" ng-options="o.id as o.value for o in periods" required>
+                    <option value="">请选择融资期限</option>
+                </select>
+            </div>
+        </div>
+    </fieldset>
+    <fieldset class="scheduler-border">
+        <legend class="scheduler-border">融资基本信息</legend>
+        <div class="row">
+            <div class="col-lg-3">
+                <label for="lcj">裸车价：</label>
+                <input type="number" class="form-control" id="lcj" step="0.01" min="0" ng-model="itemapp.lcj" required/>
+            </div>
+            <div class="col-lg-3">
+                <label for="gpsfee">GPS费用:</label>
+                <input type="number" class="form-control" id="gpsfee" step="0.01" min="0" ng-model="itemapp.gpsfee"  required/>
+            </div>
+            <div class="col-lg-3">
+                <label for="bxf">购置税:</label>
+                <input type="number" class="form-control" id="bxf"  step="0.01" min="0"  ng-model="itemapp.gzs" required/>
+            </div>
+            <div class="col-lg-3">
+                <label for="ybf">服务费:</label>
+                <input type="number" class="form-control" id="fwf"   step="0.01" min="0"  ng-model="itemapp.fwf" ng-blur="validfwf()" required/>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-lg-3">
+                <label for="bxf">保险费:</label>
+                <input type="number" class="form-control" id="bxf" step="0.01" min="0"  ng-model="itemapp.bxf" disabled/>
+            </div>
+            <div class="col-lg-3">
+                <label for="ybf">延保费:</label>
+                <input type="number" class="form-control" id="ybf" step="0.01" min="0"  ng-model="itemapp.ybf" disabled/>
+            </div>
+            <div class="col-lg-3">
+                <label for="ghf">过户费：</label>
+                <input type="number" class="form-control" id="ghf" step="0.01" min="0"  ng-model="itemapp.ghf" disabled/>
+            </div>
+            <div class="col-lg-3">
+                <label for="jzf">加装费:</label>
+                <input type="number" class="form-control" id="jzf" step="0.01" ng-model="itemapp.jzf" disabled/>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-lg-3">
+                <label for="rzsxf">融资手续费:</label>
+                <input type="number" class="form-control" id="rzsxf"  step="0.01" min="0" ng-model="itemapp.rzsxf" disabled required/>
+            </div>
+            <div class="col-lg-3">
+                <label for="ppcx">品牌车型:</label>
+                <div class="input-group m-b">
+              <span class="input-group-addon">
+                <input type="checkbox" ng-model="itemapp.clyh">>1.6L
+              </span>
+                    <input type="text" class="form-control" id="ppcx" ng-model="itemapp.ppcx"  required/>
+                </div>
+
+            </div>
+            <div class="col-lg-3">
+                <label for="clys">车辆颜色：</label>
+                <input type="text" class="form-control" id="clys" ng-model="itemapp.clys" required/>
+            </div>
+            <div class="col-lg-3">
+                <label for="scs">生产商:</label>
+                <input type="text" class="form-control" id="scs" ng-model="itemapp.scs" required/>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-lg-3">
+                <label for="cjh">车架号:</label>
+                <input type="text" class="form-control" id="cjh" ng-model="itemapp.cjh" ng-required="itemapp.producttype=='二手车融'||itemapp.producttype=='全款再融'"/>
+            </div>
+            <div class="col-lg-3">
+                <label for="fdjh">发动机号:</label>
+                <input type="text" class="form-control" id="fdjh" ng-model="itemapp.fdjh" ng-required="itemapp.producttype=='二手车融'||itemapp.producttype=='全款再融'"/>
+            </div>
+            <div class="col-lg-3">
+                <label for="pgj">售价/评估价：</label>
+                <input type="number" class="form-control" id="pgj"  step="0.01" min="0"  ng-model="itemapp.pgj" required/>
+            </div>
+            <div class="col-lg-3">
+                <label for="bzj">保证金:</label>
+                <input type="number" class="form-control" id="bzj"  step="0.01" min="0"  ng-model="itemapp.bzj" disabled/>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-lg-3">
+                <label for="sfbl">首付比例/抵押比率(百分比):</label>
+                <input type="number" class="form-control" value="0" step="0.01" min="0"  id="sfbl" ng-model="itemapp.sfbl" required/>
+            </div>
+            <div class="col-lg-3">
+                <label for="rzje">融资金额:</label>
+                <input type="number" class="form-control" id="rzje"  step="0.01" min="0"  ng-model="itemapp.rzje"  required/>
+            </div>
+        </div>
+    </fieldset>
+    <fieldset class="scheduler-border">
+        <legend class="scheduler-border">承租人1信息（基本信息</legend>
+        <div class="row">
+            <div class="col-lg-4">
+                <label for="name">姓名：</label>
+                <input type="text" class="form-control" id="name" ng-model="itemapp.name" required/>
+            </div>
+            <div class="col-lg-4">
+                <label for="idtype">证件类型:</label>
+                <select id="idtype" class="form-control" ng-model="itemapp.idtype" required>
+                    <option value="1">身份证</option>
+                    <option value="2">护照</option>
+                </select>
+            </div>
+            <div class="col-lg-4">
+                <label for="idno">证件号码:</label>
+                <input type="text" class="form-control" id="idno" maxlength="18" min="18" ng-model="itemapp.idno" required/>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-lg-4">
+                <label for="mobile">手机号码：</label>
+                <input type="text" class="form-control" id="mobile" maxlength="11" ng-model="itemapp.mobile" required/>
+            </div>
+            <div class="col-lg-4">
+                <label for="qq">QQ号:</label>
+                <input type="text" class="form-control" id="qq" ng-model="itemapp.qq"/>
+            </div>
+            <div class="col-lg-4">
+                <label for="weixin">微信号:</label>
+                <input type="text" class="form-control" id="weixin" ng-model="itemapp.weixin"/>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-lg-4">
+                <label for="education">学历:</label>
+                <select id="education" class="form-control" ng-model="itemapp.xl" required>
+                    <option value="1" >高中及以下</option>
+                    <option value="2">专科</option>
+                    <option value="3">本科</option>
+                    <option value="4">硕士及以上</option>
+                </select>
+            </div>
+            <div class="col-lg-4">
+                <label for="education">婚姻状况:</label>
+                <select id="education" class="form-control" ng-model="itemapp.hyzk" required>
+                    <option value="1">未婚</option>
+                    <option value="2">已婚</option>
+                    <option value="3">离异</option>
+                    <option value="4">丧偶</option>
+                </select>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-lg-8">
+                <label for="address">现详细地址：</label>
+                <input type="text" class="form-control" id="address" ng-model="itemapp.xxxdz" required/>
+            </div>
+            <div class="col-lg-4">
+                <label for="zsss">住所所属：</label>
+                <select id="zsss" class="form-control" ng-model="itemapp.zsqs" required>
+                    <option value="1">自有</option>
+                    <option value="2">亲属所有</option>
+                    <option value="3">租房</option>
+                    <option value="4">宿舍</option>
+                </select>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-lg-8">
+                <label for="tzr">同住人：</label>
+                <div id="tzr" class="checkbox">
+                    <label class="checkbox-inline">
+                        <input type="checkbox" id="inlineCheckbox1" value="1" ng-model="tmptzr.fq"> 夫妻
+                    </label>
+                    <label class="checkbox-inline">
+                        <input type="checkbox" id="inlineCheckbox2" value="2" ng-model="tmptzr.zv"> 子女
+                    </label>
+                    <label class="checkbox-inline">
+                        <input type="checkbox" id="inlineCheckbox3" value="3" ng-model="tmptzr.fm"> 父母
+                    </label>
+                    <label class="checkbox-inline">
+                        <input type="checkbox" id="inlineCheckbox3" value="4" ng-model="tmptzr.qq"> 亲戚
+                    </label>
+                    <label class="checkbox-inline">
+                        <input type="checkbox" id="inlineCheckbox3" value="5" ng-model="tmptzr.ts"> 同事
+                    </label>
+                    <label class="checkbox-inline">
+                        <input type="checkbox" id="inlineCheckbox3" value="5" ng-model="tmptzr.py"> 女/男朋友
+                    </label>
+                </div>
+            </div>
+            <div class="col-lg-4">
+                <label for="hjss">户籍所属：</label>
+                <select id="hjss" class="form-control" ng-model="itemapp.hjss" required>
+                    <option value="1" >本地</option>
+                    <option value="2">非本地</option>
+                </select>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-lg-8">
+                <label for="jtcy">家庭成员：</label>
+                <div id="jtcy" class="checkbox">
+                    <label class="checkbox-inline">
+                        <input type="checkbox" id="inlineCheckbox1" value="1" ng-model="tmpjtcy.fq"> 夫妻
+                    </label>
+                    <label class="checkbox-inline">
+                        <input type="checkbox" id="inlineCheckbox2" value="2" ng-model="tmpjtcy.zv"> 子女
+                    </label>
+                    <label class="checkbox-inline">
+                        <input type="checkbox" id="inlineCheckbox3" value="3" ng-model="tmpjtcy.fm"> 父母
+                    </label>
+                    <label class="checkbox-inline">
+                        <input type="checkbox" id="inlineCheckbox3" value="4" ng-model="tmpjtcy.xdjm"> 兄弟姐妹
+                    </label>
+                    <label class="checkbox-inline">
+                        <input type="checkbox" id="inlineCheckbox3" value="5" ng-model="tmpjtcy.jzj"> 仅自己
+                    </label>
+                </div>
+            </div>
+            <div class="col-lg-4">
+                <label for="lbdsc">来本地时长：</label>
+                <select id="lbdsc" class="form-control" ng-model="itemapp.lbdsc" required>
+                    <option value="1">1-3年</option>
+                    <option value="2">3-5年</option>
+                    <option value="3">5-10年</option>
+                    <option value="4">10年以上</option>
+                </select>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-lg-8">
+                <label for="fcdz1">房产一地址：</label>
+                <input type="text" class="form-control" id="fcdz1" ng-model="itemapp.fcdz1" ng-required="itemapp.zsqs==1"/>
+            </div>
+            <div class="col-lg-4">
+                <label for="fczt1">房产状态：</label>
+                <select id="fczt1" class="form-control" ng-model="itemapp.fczt1" ng-required="itemapp.zsqs==1">
+                    <option value="1">按揭</option>
+                    <option value="2">抵押</option>
+                    <option value="3">全款</option>
+                </select>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-lg-8">
+                <label for="fcdz2">房产二地址：</label>
+                <input type="text" class="form-control" id="fcdz2" ng-model="itemapp.fcdz2" />
+            </div>
+            <div class="col-lg-4">
+                <label for="fczt2">房产状态：</label>
+                <select id="fczt2" class="form-control" ng-model="itemapp.fczt2" >
+                    <option value="1">按揭</option>
+                    <option value="2">抵押</option>
+                    <option value="3">全款</option>
+                </select>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-lg-8">
+                <label for="ccxx">车产信息：</label>
+                <div class="row">
+                    <div class="col-lg-6">
+                        <input type="text" class="form-control" id="ccxx" ng-model="itemapp.ccsl" placeholder="数量"/>
+                    </div>
+                    <div class="col-lg-6">
+                        <input type="text" class="form-control" ng-model="itemapp.ccpp" placeholder="车产品牌"/>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-4">
+                <label for="cczt">车产状态：</label>
+                <select id="cczt" class="form-control" ng-model="itemapp.cczt">
+                    <option value="1">按揭</option>
+                    <option value="2">抵押</option>
+                    <option value="3">全款</option>
+                </select>
+            </div>
+        </div>
+    </fieldset>
+    <fieldset class="scheduler-border">
+        <legend class="scheduler-border">承租人信息1(工作及收入信息)</legend>
+        <div class="row">
+            <div class="col-lg-4">
+                <label for="dwmc_cz">单位名称：</label>
+                <input type="text" class="form-control" id="dwmc_cz" ng-model="itemapp.czr1dwmc" required/>
+            </div>
+            <div class="col-lg-4">
+                <label for="dwlx_cz">单位类型：</label>
+                <select id="cczt" class="form-control" ng-model="itemapp.czr1dwlx" required>
+                    <option  value='1'>自由职业</option>
+                    <option  value='2'>自雇人士</option>
+                    <option  value='3'>个体</option>
+                    <option  value='4'>私企</option>
+                    <option  value='5'>国家机关</option>
+                    <option  value='6'>事业单位</option>
+                    <option  value='7'>国企</option>
+                    <option  value='8'>外资</option>
+                    <option  value='9'>合资企业</option>
+                    <option  value='10'>上市企业</option>
+                    <option  value='11'>学校</option>
+                    <option  value='12'>教育机构</option>
+                </select>
+            </div>
+            <div class="col-lg-4">
+                <label for="sshy_cz">所属行业：</label>
+                <select id="cczt" class="form-control" ng-model="itemapp.czr1sshy" required>
+                    <option  value='0'>房地产开发经营</option>
+                    <option  value='1'>钢材生产及贸易</option>
+                    <option  value='2'>建筑/工程/劳务/施工</option>
+                    <option  value='3'>煤炭开采/洗选/商贸</option>
+                    <option  value='4'>装修行业</option>
+                    <option  value='5'>畜牧业养殖</option>
+                    <option  value='6'>纺织服装、鞋、帽、皮革、毛皮等生产制造</option>
+                    <option  value='7'>废弃资源和废旧材料回收及加工</option>
+                    <option  value='8'>化学原料及化学制品</option>
+                    <option  value='9'>交通运输通信等设备仪器制造</option>
+                    <option  value='10'>金属制品生产制造</option>
+                    <option  value='11'>木材、家具加工制造</option>
+                    <option  value='12'>农副食品加工业</option>
+                    <option  value='13'>农作物生产/种植</option>
+                    <option  value='14'>石油加工、炼焦及核燃料加工</option>
+                    <option  value='15'>食品生产制造</option>
+                    <option  value='16'>水泥、瓦砖、玻璃、陶瓷建筑材料生产制造/石矿开采</option>
+                    <option  value='17'>文教体育用品制造</option>
+                    <option  value='18'>烟草制品</option>
+                    <option  value='19'>医药生产销售</option>
+                    <option  value='20'>大中型百货超级市场</option>
+                    <option  value='21'>化学产品批发零售</option>
+                    <option  value='22'>机械设备、五金交电及电子产品批发零售</option>
+                    <option  value='23'>家用电器及电子产品批发零售</option>
+                    <option  value='24'>矿产品、建材、化工产品批发零售</option>
+                    <option  value='25'>农畜产品批发零售</option>
+                    <option  value='26'>汽车、摩托车、燃料及零配件批发零售</option>
+                    <option  value='27'>日用百货批发批发零售</option>
+                    <option  value='28'>食品、饮料批发批发零售</option>
+                    <option  value='29'>文化、体育用品及器材批发零售</option>
+                    <option  value='30'>五金、家具及室内装修材料批发零售</option>
+                    <option  value='31'>医药及医疗器材批发零售</option>
+                    <option  value='32'>餐饮服务业</option>
+                    <option  value='33'>房地产中介服务</option>
+                    <option  value='34'>互联网信息及软件服务</option>
+                    <option  value='35'>计算机等电子设备服务</option>
+                    <option  value='36'>居民服务和其他服务</option>
+                    <option  value='37'>科学研究、技术服务和地质勘查服务</option>
+                    <option  value='38'>卫生、社会保障和社会福利服务</option>
+                    <option  value='39'>物业管理服务</option>
+                    <option  value='40'>住宿服务业</option>
+                    <option  value='41'>商业信息咨询及服务</option>
+                    <option  value='42'>国有银行、商业银行、城市乡镇银行、农村信用社等ption>
+                    <option  value='43'>融资租赁、财务公司、汽车金融等金融公司</option>
+                    <option  value='44'>小贷、担保、典当、P2P、理财投资等融资机构</option>
+                    <option  value='45'>证券、保险、基金、信托等金融公司</option>
+                    <option  value='46'>仓储行业</option>
+                    <option  value='47'>交通运输行业</option>
+                    <option  value='48'>物流行业</option>
+                    <option  value='49'>教育机构</option>
+                    <option  value='50'>体育和娱乐业</option>
+                    <option  value='51'>图书馆、档案馆、博物馆等</option>
+                    <option  value='52'>新闻、出版、广播、电视、电影和音像行业</option>
+                    <option  value='53'>金、银、铜等矿业</option>
+                    <option  value='54'>石油和天然气开采</option>
+                    <option  value='55'>电力、燃气及水的生产和供应</option>
+                    <option  value='56'>水利、环境和公共设施管理</option>
+                    <option  value='57'>国际组织</option>
+                    <option  value='58'>国家机构、事业单位</option>
+                    <option  value='59'>群众团体、社会团体和宗教组织</option>
+                </select>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-lg-4">
+                <label for="dwdh_cz">单位电话：</label>
+                <input type="text" class="form-control" id="dwdh_cz" ng-model="itemapp.czr1dwdh" maxlength="20" required/>
+            </div>
+            <div class="col-lg-4">
+                <label for="zj_cz">职级：</label>
+                <select id="cczt" class="form-control" ng-model="itemapp.czr1zj" required>
+                    <option  value='1'>自由职业</option>
+                    <option  value='2'>自雇人士</option>
+                    <option  value='3'>普通员工</option>
+                    <option  value='4'>经营者</option>
+                    <option  value='5'>中层管理者</option>
+                    <option  value='6'>高管</option>
+                    <option  value='7'>法人/股东</option>
+                </select>
+            </div>
+            <div class="col-lg-4">
+                <label for="zwmc_cz">职位名称：</label>
+                <input type="text" class="form-control" id="zwmc_cz" ng-model="itemapp.czr1zwmc" required/>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-lg-8">
+                <label for="dwdz_cz">单位地址：</label>
+                <input type="text" class="form-control" id="dwdz_cz" ng-model="itemapp.czr1dwdz" required/>
+            </div>
+            <div class="col-lg-2">
+                <label for="ysr_cz">月收入：</label>
+                <input type="number" class="form-control" id="ysr_cz" ng-model="itemapp.czr1ysr" required/>
+            </div>
+            <div class="col-lg-2">
+                <label for="nsr_cz">年收入：</label>
+                <input type="number" class="form-control" id="nsr_cz" ng-model="itemapp.czr1nsr" required/>
+            </div>
+        </div>
+    </fieldset>
+    <fieldset class="scheduler-border" >
+        <legend class="scheduler-border">配偶信息（如已婚，为必填项）</legend>
+        <div class="row">
+            <div class="col-lg-4">
+                <label for="name">姓名：</label>
+                <input type="text" class="form-control" id="name" ng-model="itemapp.poname" ng-required="itemapp.hyzk==2"/>
+            </div>
+            <div class="col-lg-4">
+                <label for="idtype">证件类型:</label>
+                <select id="idtype" class="form-control" ng-model="itemapp.poidtype" ng-required="itemapp.hyzk==2">
+                    <option value="1">身份证</option>
+                    <option value="2">护照</option>
+                </select>
+            </div>
+            <div class="col-lg-4">
+                <label for="idno">证件号码:</label>
+                <input type="text" class="form-control" id="idno"  maxlength="18" min="18"  ng-model="itemapp.poidno" ng-required="itemapp.hyzk==2"/>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-lg-4">
+                <label for="mobile">手机号码：</label>
+                <input type="text" class="form-control" id="mobile" maxlength="11" ng-model="itemapp.pomobile" ng-required="itemapp.hyzk==2"/>
+            </div>
+            <div class="col-lg-4">
+                <label for="qq">QQ号:</label>
+                <input type="text" class="form-control" id="qq" ng-model="itemapp.poqq"/>
+            </div>
+            <div class="col-lg-4">
+                <label for="weixin">微信号:</label>
+                <input type="text" class="form-control" id="weixin" ng-model="itemapp.poweixin"/>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-lg-4">
+                <label for="dwmc_cz">单位名称：</label>
+                <input type="text" class="form-control" id="dwmc_cz" ng-model="itemapp.podwmc" ng-required="itemapp.hyzk==2"/>
+            </div>
+            <div class="col-lg-4">
+                <label for="dwlx_cz">单位类型：</label>
+                <select id="cczt" class="form-control" ng-model="itemapp.podwlx" ng-required="itemapp.hyzk==2">
+                    <option  value='1'>自由职业</option>
+                    <option  value='2'>自雇人士</option>
+                    <option  value='3'>个体</option>
+                    <option  value='4'>私企</option>
+                    <option  value='5'>国家机关</option>
+                    <option  value='6'>事业单位</option>
+                    <option  value='7'>国企</option>
+                    <option  value='8'>外资</option>
+                    <option  value='9'>合资企业</option>
+                    <option  value='10'>上市企业</option>
+                    <option  value='11'>学校</option>
+                    <option  value='12'>教育机构</option>
+                </select>
+            </div>
+            <div class="col-lg-4">
+                <label for="sshy_cz">所属行业：</label>
+                <select id="cczt" class="form-control" ng-model="itemapp.posshy" ng-required="itemapp.hyzk==2">
+                    <option  value='0'>房地产开发经营</option>
+                    <option  value='1'>钢材生产及贸易</option>
+                    <option  value='2'>建筑/工程/劳务/施工</option>
+                    <option  value='3'>煤炭开采/洗选/商贸</option>
+                    <option  value='4'>装修行业</option>
+                    <option  value='5'>畜牧业养殖</option>
+                    <option  value='6'>纺织服装、鞋、帽、皮革、毛皮等生产制造</option>
+                    <option  value='7'>废弃资源和废旧材料回收及加工</option>
+                    <option  value='8'>化学原料及化学制品</option>
+                    <option  value='9'>交通运输通信等设备仪器制造</option>
+                    <option  value='10'>金属制品生产制造</option>
+                    <option  value='11'>木材、家具加工制造</option>
+                    <option  value='12'>农副食品加工业</option>
+                    <option  value='13'>农作物生产/种植</option>
+                    <option  value='14'>石油加工、炼焦及核燃料加工</option>
+                    <option  value='15'>食品生产制造</option>
+                    <option  value='16'>水泥、瓦砖、玻璃、陶瓷建筑材料生产制造/石矿开采</option>
+                    <option  value='17'>文教体育用品制造</option>
+                    <option  value='18'>烟草制品</option>
+                    <option  value='19'>医药生产销售</option>
+                    <option  value='20'>大中型百货超级市场</option>
+                    <option  value='21'>化学产品批发零售</option>
+                    <option  value='22'>机械设备、五金交电及电子产品批发零售</option>
+                    <option  value='23'>家用电器及电子产品批发零售</option>
+                    <option  value='24'>矿产品、建材、化工产品批发零售</option>
+                    <option  value='25'>农畜产品批发零售</option>
+                    <option  value='26'>汽车、摩托车、燃料及零配件批发零售</option>
+                    <option  value='27'>日用百货批发批发零售</option>
+                    <option  value='28'>食品、饮料批发批发零售</option>
+                    <option  value='29'>文化、体育用品及器材批发零售</option>
+                    <option  value='30'>五金、家具及室内装修材料批发零售</option>
+                    <option  value='31'>医药及医疗器材批发零售</option>
+                    <option  value='32'>餐饮服务业</option>
+                    <option  value='33'>房地产中介服务</option>
+                    <option  value='34'>互联网信息及软件服务</option>
+                    <option  value='35'>计算机等电子设备服务</option>
+                    <option  value='36'>居民服务和其他服务</option>
+                    <option  value='37'>科学研究、技术服务和地质勘查服务</option>
+                    <option  value='38'>卫生、社会保障和社会福利服务</option>
+                    <option  value='39'>物业管理服务</option>
+                    <option  value='40'>住宿服务业</option>
+                    <option  value='41'>商业信息咨询及服务</option>
+                    <option  value='42'>国有银行、商业银行、城市乡镇银行、农村信用社等ption>
+                    <option  value='43'>融资租赁、财务公司、汽车金融等金融公司</option>
+                    <option  value='44'>小贷、担保、典当、P2P、理财投资等融资机构</option>
+                    <option  value='45'>证券、保险、基金、信托等金融公司</option>
+                    <option  value='46'>仓储行业</option>
+                    <option  value='47'>交通运输行业</option>
+                    <option  value='48'>物流行业</option>
+                    <option  value='49'>教育机构</option>
+                    <option  value='50'>体育和娱乐业</option>
+                    <option  value='51'>图书馆、档案馆、博物馆等</option>
+                    <option  value='52'>新闻、出版、广播、电视、电影和音像行业</option>
+                    <option  value='53'>金、银、铜等矿业</option>
+                    <option  value='54'>石油和天然气开采</option>
+                    <option  value='55'>电力、燃气及水的生产和供应</option>
+                    <option  value='56'>水利、环境和公共设施管理</option>
+                    <option  value='57'>国际组织</option>
+                    <option  value='58'>国家机构、事业单位</option>
+                    <option  value='59'>群众团体、社会团体和宗教组织</option>
+                </select>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-lg-4">
+                <label for="dwdh_cz">单位电话：</label>
+                <input type="text" class="form-control" id="dwdh_cz" ng-model="itemapp.podwdh" ng-required="itemapp.hyzk==2"/>
+            </div>
+            <div class="col-lg-4">
+                <label for="zj_cz">职级：</label>
+                <select id="cczt" class="form-control" ng-model="itemapp.pozj" ng-required="itemapp.hyzk==2">
+                    <option  value='1'>自由职业</option>
+                    <option  value='2'>自雇人士</option>
+                    <option  value='3'>普通员工</option>
+                    <option  value='4'>经营者</option>
+                    <option  value='5'>中层管理者</option>
+                    <option  value='6'>高管</option>
+                    <option  value='7'>法人/股东</option>
+                </select>
+            </div>
+            <div class="col-lg-4">
+                <label for="zwmc_cz">职位名称：</label>
+                <input type="text" class="form-control" id="zwmc_cz" ng-model="itemapp.pozwmc" ng-required="itemapp.hyzk==2"/>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-lg-8">
+                <label for="dwdz_cz">单位地址：</label>
+                <input type="text" class="form-control" id="dwdz_cz" ng-model="itemapp.podwdz" ng-required="itemapp.hyzk==2"/>
+            </div>
+            <div class="col-lg-2">
+                <label for="ysr_cz">月收入：</label>
+                <input type="number" class="form-control" id="ysr_cz" step="0.01" min="0" ng-model="itemapp.poysr" ng-required="itemapp.hyzk==2"/>
+            </div>
+            <div class="col-lg-2">
+                <label for="nsr_cz">年收入：</label>
+                <input type="number" class="form-control" id="nsr_cz" step="0.01"  min="0" ng-model="itemapp.ponsr" ng-required="itemapp.hyzk==2"/>
+            </div>
+        </div>
+    </fieldset>
+    <fieldset class="scheduler-border">
+        <legend class="scheduler-border">承租人2/担保人信息（如有）</legend>
+        <div class="row">
+            <div class="col-lg-3">
+                <label for="name">承租人2类型：</label>
+                <select id="ybrgx" class="form-control" ng-model="itemapp.czr2lx">
+                    <option value="1">承租人</option>
+                    <option value="2">担保人</option>
+                </select>
+            </div>
+            <div class="col-lg-3">
+                <label for="name">姓名：</label>
+                <input type="text" class="form-control" id="name" ng-model="itemapp.czr2name"/>
+            </div>
+            <div class="col-lg-3">
+                <label for="idtype">证件类型:</label>
+                <select id="idtype" class="form-control" ng-model="itemapp.czr2idtype">
+                    <option value="1">身份证</option>
+                    <option value="2">护照</option>
+                </select>
+            </div>
+            <div class="col-lg-3">
+                <label for="idno">证件号码:</label>
+                <input type="text" class="form-control" id="idno"  maxlength="18" min="18" ng-model="itemapp.czr2idno"/>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-lg-4">
+                <label for="mobile">手机号码：</label>
+                <input type="text" class="form-control" id="mobile" maxlength="11" ng-model="itemapp.czr2mobile"/>
+            </div>
+            <div class="col-lg-4">
+                <label for="qq">QQ/微信号:</label>
+                <input type="text" class="form-control" id="qq" ng-model="itemapp.czr2qq"/>
+            </div>
+            <div class="col-lg-4">
+                <label for="ybrgx">与本人关系:</label>
+                <select id="ybrgx" class="form-control" ng-model="itemapp.czr2brgx">
+                    <option value="1">父母</option>
+                    <option value="2">子女</option>
+                    <option value="3">亲属</option>
+                    <option value="3">朋友</option>
+                </select>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-lg-4">
+                <label for="dwmc_cz">单位名称：</label>
+                <input type="text" class="form-control" id="dwmc_cz" ng-model="itemapp.czr2dwmc"/>
+            </div>
+            <div class="col-lg-4">
+                <label for="dwlx_cz">单位类型：</label>
+                <select id="cczt" class="form-control" ng-model="itemapp.czr2dwlx">
+                    <option  value='1'>自由职业</option>
+                    <option  value='2'>自雇人士</option>
+                    <option  value='3'>个体</option>
+                    <option  value='4'>私企</option>
+                    <option  value='5'>国家机关</option>
+                    <option  value='6'>事业单位</option>
+                    <option  value='7'>国企</option>
+                    <option  value='8'>外资</option>
+                    <option  value='9'>合资企业</option>
+                    <option  value='10'>上市企业</option>
+                    <option  value='11'>学校</option>
+                    <option  value='12'>教育机构</option>
+                </select>
+            </div>
+            <div class="col-lg-4">
+                <label for="sshy_cz">所属行业：</label>
+                <select id="cczt" class="form-control" ng-model="itemapp.czr2sshy" >
+                    <option  value='0'>房地产开发经营</option>
+                    <option  value='1'>钢材生产及贸易</option>
+                    <option  value='2'>建筑/工程/劳务/施工</option>
+                    <option  value='3'>煤炭开采/洗选/商贸</option>
+                    <option  value='4'>装修行业</option>
+                    <option  value='5'>畜牧业养殖</option>
+                    <option  value='6'>纺织服装、鞋、帽、皮革、毛皮等生产制造</option>
+                    <option  value='7'>废弃资源和废旧材料回收及加工</option>
+                    <option  value='8'>化学原料及化学制品</option>
+                    <option  value='9'>交通运输通信等设备仪器制造</option>
+                    <option  value='10'>金属制品生产制造</option>
+                    <option  value='11'>木材、家具加工制造</option>
+                    <option  value='12'>农副食品加工业</option>
+                    <option  value='13'>农作物生产/种植</option>
+                    <option  value='14'>石油加工、炼焦及核燃料加工</option>
+                    <option  value='15'>食品生产制造</option>
+                    <option  value='16'>水泥、瓦砖、玻璃、陶瓷建筑材料生产制造/石矿开采</option>
+                    <option  value='17'>文教体育用品制造</option>
+                    <option  value='18'>烟草制品</option>
+                    <option  value='19'>医药生产销售</option>
+                    <option  value='20'>大中型百货超级市场</option>
+                    <option  value='21'>化学产品批发零售</option>
+                    <option  value='22'>机械设备、五金交电及电子产品批发零售</option>
+                    <option  value='23'>家用电器及电子产品批发零售</option>
+                    <option  value='24'>矿产品、建材、化工产品批发零售</option>
+                    <option  value='25'>农畜产品批发零售</option>
+                    <option  value='26'>汽车、摩托车、燃料及零配件批发零售</option>
+                    <option  value='27'>日用百货批发批发零售</option>
+                    <option  value='28'>食品、饮料批发批发零售</option>
+                    <option  value='29'>文化、体育用品及器材批发零售</option>
+                    <option  value='30'>五金、家具及室内装修材料批发零售</option>
+                    <option  value='31'>医药及医疗器材批发零售</option>
+                    <option  value='32'>餐饮服务业</option>
+                    <option  value='33'>房地产中介服务</option>
+                    <option  value='34'>互联网信息及软件服务</option>
+                    <option  value='35'>计算机等电子设备服务</option>
+                    <option  value='36'>居民服务和其他服务</option>
+                    <option  value='37'>科学研究、技术服务和地质勘查服务</option>
+                    <option  value='38'>卫生、社会保障和社会福利服务</option>
+                    <option  value='39'>物业管理服务</option>
+                    <option  value='40'>住宿服务业</option>
+                    <option  value='41'>商业信息咨询及服务</option>
+                    <option  value='42'>国有银行、商业银行、城市乡镇银行、农村信用社等ption>
+                    <option  value='43'>融资租赁、财务公司、汽车金融等金融公司</option>
+                    <option  value='44'>小贷、担保、典当、P2P、理财投资等融资机构</option>
+                    <option  value='45'>证券、保险、基金、信托等金融公司</option>
+                    <option  value='46'>仓储行业</option>
+                    <option  value='47'>交通运输行业</option>
+                    <option  value='48'>物流行业</option>
+                    <option  value='49'>教育机构</option>
+                    <option  value='50'>体育和娱乐业</option>
+                    <option  value='51'>图书馆、档案馆、博物馆等</option>
+                    <option  value='52'>新闻、出版、广播、电视、电影和音像行业</option>
+                    <option  value='53'>金、银、铜等矿业</option>
+                    <option  value='54'>石油和天然气开采</option>
+                    <option  value='55'>电力、燃气及水的生产和供应</option>
+                    <option  value='56'>水利、环境和公共设施管理</option>
+                    <option  value='57'>国际组织</option>
+                    <option  value='58'>国家机构、事业单位</option>
+                    <option  value='59'>群众团体、社会团体和宗教组织</option>
+                </select>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-lg-4">
+                <label for="dwdh_cz">单位电话：</label>
+                <input type="text" class="form-control" id="dwdh_cz" ng-model="itemapp.czr2dwdh"/>
+            </div>
+            <div class="col-lg-4">
+                <label for="zj_cz">职级：</label>
+                <select id="cczt" class="form-control" ng-model="itemapp.czr2zj">
+                    <option  value='1'>自由职业</option>
+                    <option  value='2'>自雇人士</option>
+                    <option  value='3'>普通员工</option>
+                    <option  value='4'>经营者</option>
+                    <option  value='5'>中层管理者</option>
+                    <option  value='6'>高管</option>
+                    <option  value='7'>法人/股东</option>
+                </select>
+            </div>
+            <div class="col-lg-4">
+                <label for="zwmc_cz">职位名称：</label>
+                <input type="text" class="form-control" id="zwmc_cz" ng-model="itemapp.czr2zwmc"/>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-lg-8">
+                <label for="dwdz_cz">单位地址：</label>
+                <input type="text" class="form-control" id="dwdz_cz" ng-model="itemapp.czr2dwdz"/>
+            </div>
+            <div class="col-lg-2">
+                <label for="ysr_cz">月收入：</label>
+                <input type="number" class="form-control" step="0.01" min="0" id="ysr_cz" ng-model="itemapp.czr2ysr"/>
+            </div>
+            <div class="col-lg-2">
+                <label for="nsr_cz">年收入：</label>
+                <input type="number" class="form-control" step="0.01" min="0" id="nsr_cz" ng-model="itemapp.czr2nsr"/>
+            </div>
+        </div>
+    </fieldset>
+    <fieldset class="scheduler-border">
+        <legend class="scheduler-border">联系人一信息</legend>
+        <div class="row">
+            <div class="col-lg-4">
+                <label for="name">姓名：</label>
+                <input type="text" class="form-control" id="name" ng-model="itemapp.lxr1name" required/>
+            </div>
+            <div class="col-lg-4">
+                <label for="mobile">手机号:</label>
+                <input type="text" class="form-control" id="mobile" ng-model="itemapp.lxr1mobile" maxlength="11" required/>
+            </div>
+            <div class="col-lg-4">
+                <label for="ybrgx">与本人关系:</label>
+                <select id="ybrgx" class="form-control" ng-model="itemapp.lxr1gx" required>
+                    <option value="1">父母</option>
+                    <option value="2">子女</option>
+                    <option value="3">亲属</option>
+                    <option value="3">朋友</option>
+                </select>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-lg-8">
+                <label for="address">住址：</label>
+                <input type="text" class="form-control" id="address" ng-model="itemapp.lxr1dz" required/>
+            </div>
+            <div class="col-lg-4">
+                <label for="fczt1">是否知道购车：</label>
+                <select id="fczt1" class="form-control" ng-model="itemapp.lxr1sfzdgc" required>
+                    <option value="1">知道</option>
+                    <option value="2">不知道</option>
+                    <option value="3">保密</option>
+                </select>
+            </div>
+        </div>
+    </fieldset>
+    <fieldset class="scheduler-border">
+        <legend class="scheduler-border">联系人二信息</legend>
+        <div class="row">
+            <div class="col-lg-4">
+                <label for="name">姓名：</label>
+                <input type="text" class="form-control" id="name" ng-model="itemapp.lxr2name" required/>
+            </div>
+            <div class="col-lg-4">
+                <label for="mobile">手机号:</label>
+                <input type="text" class="form-control" id="mobile" ng-model="itemapp.lxr2mobile" maxlength="11" required/>
+            </div>
+            <div class="col-lg-4">
+                <label for="ybrgx">与本人关系:</label>
+                <select id="ybrgx" class="form-control" ng-model="itemapp.lxr2gx"  required>
+                    <option value="1">父母</option>
+                    <option value="2">子女</option>
+                    <option value="3">亲属</option>
+                    <option value="3">朋友</option>
+                </select>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-lg-8">
+                <label for="address">住址：</label>
+                <input type="text" class="form-control" id="address" ng-model="itemapp.lxr2dz" required/>
+            </div>
+            <div class="col-lg-4">
+                <label for="fczt1">是否知道购车：</label>
+                <select id="fczt1" class="form-control" ng-model="itemapp.lxr2sfzdgc" required>
+                    <option value="1">知道</option>
+                    <option value="2">不知道</option>
+                    <option value="3">保密</option>
+                </select>
+            </div>
+        </div>
+    </fieldset>
+    <fieldset class="scheduler-border">
+        <legend class="scheduler-border">家庭负债情况</legend>
+        <div class="row">
+            <div class="col-lg-12">
+                <table class="table table-striped">
+                    <tr>
+                        <td><span>序号</span></td>
+                        <td>银行贷款</td>
+                        <td>小贷/P2P</td>
+                        <td>担保公司</td>
+                        <td>信用卡</td>
+                        <td>亲戚</td>
+                        <td>朋友</td>
+                        <td>租车公司</td>
+                        <td>总额</td>
+                    </tr>
+                    <tr>
+                        <td>欠款金额</td>
+                        <td><input type="number" style="width: 80px" class="form-control" step="0.01" min="0" ng-model="itemapp.jtfzyhqkje"/> </td>
+                        <td><input type="number" style="width: 80px" class="form-control" step="0.01" min="0"  ng-model="itemapp.jtfzp2pqkje"/> </td>
+                        <td><input type="number" style="width: 80px" class="form-control" step="0.01" min="0"  ng-model="itemapp.jtfzdbqkje"/> </td>
+                        <td><input type="number" style="width: 80px" class="form-control" step="0.01" min="0"  ng-model="itemapp.jtfzxykqkje"/> </td>
+                        <td><input type="number" style="width: 80px" class="form-control" step="0.01" min="0"  ng-model="itemapp.jtfzqqqkje"/> </td>
+                        <td><input type="number" style="width: 80px" class="form-control" step="0.01" min="0"  ng-model="itemapp.jtfzpyqkje"/> </td>
+                        <td><input type="number" style="width: 80px" class="form-control" step="0.01" min="0"  ng-model="itemapp.jtfzzcgsqkje"/> </td>
+                        <td><input type="number" style="width: 80px" class="form-control" step="0.01" min="0" ng-model="itemapp.jtfzze" disabled/> </td>
+                    </tr>
+                    <tr>
+                        <td>月还款</td>
+                        <td><input type="number" style="width: 80px" class="form-control" step="0.01" min="0"  ng-model="itemapp.jtfzyhdqkhk"/> </td>
+                        <td><input type="number" style="width: 80px" class="form-control" step="0.01" min="0"  ng-model="itemapp.jtfzp2pqkyhk"/> </td>
+                        <td><input type="number" style="width: 80px" class="form-control" step="0.01" min="0"  ng-model="itemapp.jtfzdbqkyhk"/> </td>
+                        <td><input type="number" style="width: 80px" class="form-control" step="0.01" min="0"  ng-model="itemapp.jtfzxykqkyhk"/> </td>
+                        <td><input type="number" style="width: 80px" class="form-control" step="0.01" min="0"  ng-model="itemapp.jtfzqqqkyhk"/> </td>
+                        <td><input type="number" style="width: 80px" class="form-control" step="0.01" min="0"  ng-model="itemapp.jtfzpyqkyhk"/> </td>
+                        <td><input type="number" style="width: 80px" class="form-control" step="0.01" min="0"  ng-model="itemapp.jtfzzcgsqkyhk"/> </td>
+                        <td><input type="number" style="width: 80px" class="form-control" step="0.01" min="0"  ng-model="itemapp.jtfzzhke" disabled/> </td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+    </fieldset>
+</div>

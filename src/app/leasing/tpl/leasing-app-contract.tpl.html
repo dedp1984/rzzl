@@ -1,0 +1,74 @@
+<div class="wrapper-md" ng-init="initConfirmStatusData()">
+    <form name="app">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                合同打印
+                <span class="pull-right"><i class="glyphicon glyphicon-remove" id="spin" ng-click="back()"></i></span>
+            </div>
+            <div class="panel-body">
+                <div class="row">
+                    <div class="col-sm-4">
+                        <label>融资款发放户名:</label>
+                        <input type="text" class="form-control" ng-model="account.sysBranch.acctname" required/>
+                    </div>
+                    <div class="col-sm-4">
+                        <label>融资款发放账号:</label>
+                        <input type="text" class="form-control" ng-model="account.sysBranch.openbankno" required/>
+                    </div>
+                    <div class="col-sm-4">
+                        <label>融资款账号开户行:</label>
+                        <input type="text" class="form-control" ng-model="account.sysBranch.openbankname" required/>
+                    </div>
+                </div>
+                <div class="line line-dashed b-b line-sm pull-in"></div>
+                <div class="row">
+                    <div class="col-sm-4">
+                        <label>月租金还款户名:</label>
+                        <input type="text" class="form-control" ng-model="itemapp.name" required disabled/>
+                    </div>
+                    <div class="col-sm-4">
+                        <label>月租金还款账号:</label>
+                        <input type="text" class="form-control" ng-model="itemapp.refundacctno" required/>
+                    </div>
+                    <div class="col-sm-4">
+                        <label>月租金还款账号开户行:</label>
+                        <input type="text" class="form-control" ng-model="itemapp.refundbankno" required/>
+                    </div>
+                </div>
+                <div class="line line-dashed b-b line-sm pull-in"></div>
+                <div class="row">
+                    <div class="col-sm-4">
+                        <label>合同编号:</label>
+                        <input type="text" class="form-control" ng-model="itemapp.contractid" required/>
+                    </div>
+                    <div class="col-sm-4">
+                        <label>车牌号:</label>
+                        <input type="text" class="form-control" ng-model="itemapp.cph"
+                                ng-disabled="itemapp.producttype=='新车融'||itemapp.producttype=='信用融'"/>
+                    </div>
+                    <div class="col-sm-4">
+                        <label>车架号:</label>
+                        <input type="text" class="form-control" ng-model="itemapp.cjh" required/>
+                    </div>
+                </div>
+                <div class="line line-dashed b-b line-sm pull-in"></div>
+                <div class="row">
+                    <div class="col-sm-4">
+                        <label>发动机号:</label>
+                        <input type="text" class="form-control" ng-model="itemapp.fdjh" required/>
+                    </div>
+                    <div class="col-sm-4">
+                        <label>实际裸车价:</label>
+                        <input type="number" class="form-control" name="tmplcj" ng-model="tmplcj" verify-sjje  old-val="itemapp.lcj" required/>
+                        <span class="error" ng-show="app.tmplcj.$error.sfhf">实际金额不超过裸车价上下3%</span>
+                    </div>
+                </div>
+                <div class="line line-dashed b-b line-sm pull-in"></div>
+                <div class="pull-right">
+                    <button type="button" class="btn btn-info m-r-sm" ng-disabled="app.$invalid"  ng-click="printContract()"><i class="fa fa-print"></i>打印</button>
+                    <button type="button" class="btn btn-default" ng-click="back()"><i class="glyphicon glyphicon-remove"></i>取消</button>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>

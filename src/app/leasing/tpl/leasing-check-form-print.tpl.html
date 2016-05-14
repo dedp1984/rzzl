@@ -1,0 +1,258 @@
+<div class="wrapper-md"  >
+    <div class="row" id="printcheck">
+        <div class="panel panel-default"  id="print-content">
+            <div class="panel-heading" >
+                <img height="20px" src="img/logo.png"/><span class=" pull-right m-b-md">申请单号:{{itemapp.id}}</span>
+                &nbsp;
+            </div>
+            <div class="panel-body">
+                <div>
+                    <br/>
+                    <h3 style="text-align: center;">个人融资租赁审核表</h3>
+                    <br/>
+                    <table class="print-table" cellspacing="0">
+                        <tr>
+                            <td  colspan="7" class="print-table title">审核信息</td>
+                        </tr>
+                        <tr>
+                            <td style="width: 15%">姓名:</td>
+                            <td style="width:15%">{{itemapp.name}}</td>
+                            <td style="width: 15%">证件号码:</td>
+                            <td colspan="2" style="width: 30%" >{{itemapp.idno}}</td>
+                            <td  style="width: 10%">婚姻状况:</td>
+                            <td  style="width: 15%">
+                                <select id="education" class="form-control" ng-model="itemapp.hyzk" required>
+                                    <option value="1">未婚</option>
+                                    <option value="2">已婚</option>
+                                    <option value="3">离异</option>
+                                    <option value="4">丧偶</option>
+                                </select>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td >联系人确认情况:</td>
+                            <td colspan="3" >{{itemcheck.lxrqrzk}}</td>
+                            <td >负面信息:</td>
+                            <td colspan="2"  >{{itemcheck.fmxx}}</td>
+                        </tr>
+                        <tr>
+                            <td  colspan="7" class="print-table title">工作信息</td>
+                        </tr>
+                        <tr>
+                            <td >单位名称：</td>
+                            <td colspan="3" >{{itemapp.czr1dwmc}}</td>
+                            <td >信用网：</td>
+                            <td colspan="2"  >
+                                <select id="zsss" class="form-control" ng-model="itemcheck.xyw" required>
+                                    <option value="1">正常</option>
+                                    <option value="2">无登记</option>
+                                    <option value="3">不一致</option>
+                                </select>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td >单位地址：</td>
+                            <td colspan="3" >{{itemapp.czr1dwdz}}</td>
+                            <td >工资收入：</td>
+                            <td colspan="2"  >{{itemapp.ysr}}</td>
+                        </tr>
+                        <tr>
+                            <td >职位：</td>
+                            <td >{{itemapp.czr1zwmc}}</td>
+                            <td >工作年限：</td>
+                            <td colspan="2"  >{{itemcheck.gznx}}</td>
+                            <td >核实电话:</td>
+                            <td >{{itemapp.czr1dwdh}}</td>
+                        </tr>
+                        <tr>
+                            <td >补充信息：</td>
+                            <td colspan="6" >{{itemcheck.bcxx1}}</td>
+                        </tr>
+                        <tr>
+                            <td  colspan="7" class="print-table title">住址信息</td>
+                        </tr>
+                        <tr>
+                            <td >现住址：</td>
+                            <td colspan="6" >{{itemapp.xxxdz}}</td>
+                        </tr>
+                        <tr>
+                            <td >住址形式：</td>
+                            <td >
+                                <select id="zsss" class="form-control" ng-model="itemapp.zsqs" required>
+                                    <option value="1">自有</option>
+                                    <option value="2">亲属所有</option>
+                                    <option value="3">租房</option>
+                                    <option value="4">宿舍</option>
+                                </select>
+                            </td>
+                            <td >月供款/租金：</td>
+                            <td colspan="2"  >{{itemcheck.ygk}}</td>
+                            <td >同住人关系:</td>
+                            <td >{{itemcheck.tzrgx}}</td>
+                        </tr>
+                        <tr>
+                            <td >补充信息：</td>
+                            <td colspan="6" >{{itemcheck.bcxx2}}</td>
+                        </tr>
+                        <tr>
+                            <td  colspan="7" class="print-table title">资产信息</td>
+                        </tr>
+                        <tr>
+                            <td >房产一地址：</td>
+                            <td colspan="6" >{{itemapp.fcdz1}}</td>
+                        </tr>
+                        <tr>
+                            <td>产权情况</td>
+                            <td>房屋状态</td>
+                            <td>建筑面积</td>
+                            <td>贷款金额</td>
+                            <td>贷款余额</td>
+                            <td>月供款</td>
+                            <td>评估价</td>
+                        </tr>
+                        <tr>
+                            <td>{{itemcheck.cqqk1}}</td>
+                            <td>
+                                <select id="fczt2" class="form-control" style="width: 100px" ng-model="itemapp.fczt1">
+                                    <option value="1">按揭</option>
+                                    <option value="2">抵押</option>
+                                    <option value="3">全款</option>
+                                </select>
+                            </td>
+                            <td>{{itemcheck.jzmj1}}</td>
+                            <td>{{itemcheck.dkje1}}</td>
+                            <td>{{itemcheck.dkye1}}</td>
+                            <td>{{itemcheck.ygk1}}</td>
+                            <td>{{itemcheck.pgj1}}</td>
+                        </tr>
+                        <tr>
+                            <td >补充说明：</td>
+                            <td colspan="6" >{{itemcheck.fcbcsm1}}</td>
+                        </tr>
+                        <tr>
+                            <td >房产二地址：</td>
+                            <td colspan="6" >{{itemapp.fcdz2}}</td>
+                        </tr>
+                        <tr>
+                            <td>产权情况</td>
+                            <td>房屋状态</td>
+                            <td>建筑面积</td>
+                            <td>贷款金额</td>
+                            <td>贷款余额</td>
+                            <td>月供款</td>
+                            <td>评估价</td>
+                        </tr>
+                        <tr>
+                            <td>{{itemcheck.cqqk2}}</td>
+                            <td>
+                                <select id="fczt2" class="form-control" style="width: 100px" ng-model="itemapp.fczt2">
+                                    <option value="1">按揭</option>
+                                    <option value="2">抵押</option>
+                                    <option value="3">全款</option>
+                                </select>
+                            </td>
+                            <td>{{itemcheck.jzmj2}}</td>
+                            <td>{{itemcheck.dkje2}}</td>
+                            <td>{{itemcheck.dkye2}}</td>
+                            <td>{{itemcheck.ygk2}}</td>
+                            <td>{{itemcheck.pgj2}}</td>
+                        </tr>
+                        <tr>
+                            <td >补充说明：</td>
+                            <td colspan="6" >{{itemcheck.fcbcsm2}}</td>
+                        </tr>
+                        <tr>
+                            <td>车辆一品牌</td>
+                            <td>购买价格</td>
+                            <td>购买时间</td>
+                            <td>是否抵押</td>
+                            <td>贷款金额</td>
+                            <td>月供款</td>
+                            <td>评估价</td>
+                        </tr>
+                        <tr>
+                            <td>{{itemapp.ccpp}}</td>
+                            <td>{{itemcheck.gmjg}}</td>
+                            <td>{{itemcheck.gmsj}}</td>
+                            <td>
+                                <select id="cczt" style="width: 100px" class="form-control" ng-model="itemapp.cczt">
+                                    <option value="1">按揭</option>
+                                    <option value="2">抵押</option>
+                                    <option value="3">全款</option>
+                                </select>
+                            </td>
+                            <td>{{itemcheck.qcdkje}}</td>
+                            <td>{{itemcheck.qcygk}}</td>
+                            <td>{{itemcheck.qcpgj}}</td>
+                        </tr>
+                        <tr>
+                            <td >补充说明：</td>
+                            <td colspan="6" >{{itemcheck.qcbcsm}}</td>
+                        </tr>
+                        <tr>
+                            <td >其他资产说明：</td>
+                            <td colspan="6" >{{itemcheck.qtzcsm}}</td>
+                        </tr>
+                        <tr>
+                            <td  colspan="7" class="print-table title">收支情况</td>
+                        </tr>
+                        <tr>
+                            <td>收入</td>
+                            <td>固定工资</td>
+                            <td>年终奖/12</td>
+                            <td>副业收入</td>
+                            <td>配偶收入</td>
+                            <td>其他收入</td>
+                            <td>合计：</td>
+                        </tr>
+                        <tr>
+                            <td></td>
+                            <td>{{itemcheck.gdgz}}</td>
+                            <td>{{itemcheck.nzj}}</td>
+                            <td>{{itemcheck.fysr}}</td>
+                            <td>{{itemcheck.posr}}</td>
+                            <td>{{itemcheck.qtsr}}</td>
+                            <td>{{itemcheck.srhj}}</td>
+                        </tr>
+                        <tr>
+                            <td>支出</td>
+                            <td>抵押贷款</td>
+                            <td>信用贷款（小贷p2p担保类）+信用卡</td>
+                            <td>房租+房贷</td>
+                            <td>日常开支</td>
+                            <td>其他</td>
+                            <td>合计：</td>
+                        </tr>
+                        <tr>
+                            <td>支出</td>
+                            <td>{{itemcheck.dydk}}</td>
+                            <td>{{itemcheck.xydk}}</td>
+                            <td>{{itemcheck.fzfd}}</td>
+                            <td>{{itemcheck.rckz}}</td>
+                            <td>{{itemcheck.qtkz}}</td>
+                            <td>{{itemcheck.zchj}}</td>
+                        </tr>
+                        <tr>
+                            <td colspan="2">本次车贷月供：</td>
+                            <td>{{itemapp.ygk}}</td>
+                            <td>{{hknlts}}</td>
+                            <td colspan="2">月盈余：</td>
+                            <td>{{yyu}}</td>
+                        </tr>
+                        <tr>
+                            <td  colspan="7" class="print-table title">其他信息</td>
+                        </tr>
+                        <tr>
+                            <td >情况说明：</td>
+                            <td colspan="6" >{{itemcheck.szqksm}}</td>
+                        </tr>
+                        <tr>
+                            <td >其他信息：</td>
+                            <td colspan="6" >{{itemcheck.qtsm}}</td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

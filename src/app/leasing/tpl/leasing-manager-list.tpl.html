@@ -1,0 +1,105 @@
+<div class="wrapper-md" ng-init="initList()">
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            申请单明细
+        </div>
+        <div class="row wrapper">
+            <div class="col-sm-2">
+                <input type="text" ng-model="vm.id" class="input-sm form-control" placeholder="申请单号">
+            </div>
+            <div class="col-sm-2">
+                <input type="text" ng-model="vm.name" class="input-sm form-control" placeholder="申请人姓名">
+            </div>
+            <div class="col-sm-2">
+                <input type="date" ng-model="vm.sqfqrq" class="input-sm form-control" placeholder="申请日期">
+            </div>
+            <div class="col-sm-2">
+                <select id="sqdzt" class=" input-sm form-control" ng-model="vm.sqdzt">
+                    <option value=""  selected>所有</option>
+                    <option value="未确认">未确认</option>
+                    <option value="待审核">待审核</option>
+                    <option value="审核中">审核中</option>
+                    <option value="待审批">待审批</option>
+                    <option value="待确认">待确认</option>
+                    <option value="审核退回">审核退回</option>
+                    <option value="审批退回">审批退回</option>
+                    <option value="审批拒绝">审批拒绝</option>
+                    <option value="待签约">待签约</option>
+                    <option value="已打印">已打印</option>
+                    <option value="已锁定">已锁定</option>
+                </select>
+            </div>
+            <div class="col-sm-2">
+                <div class="input-group">
+                    <span class="input-group-btn">
+                        <button class="btn btn-sm btn-default" type="button" ng-click="query()"><i class="fa fa-search m-r-sm"></i>查找</button>
+                    </span>
+                </div>
+            </div>
+        </div>
+        <div class="table-responsive">
+            <table class="table table-condensed table-hover  small b-t b-light">
+                <thead>
+                <tr>
+                    <th  width="10%">申请编号</th>
+                    <th  width="8%">等级</th>
+                    <th  width="9%">姓名</th>
+                    <th  width="7%">审核员</th>
+                    <th  width="7%">批核日期</th>
+                    <th  width="7%">审核时长</th>
+                    <th  width="7%">放款日期</th>
+                    <th  width="7%">批核金额</th>
+                    <th  width="7%">审批期限</th>
+                    <th  width="7%">首付比例</th>
+                    <th  width="7%">案件状态</th>
+                    <th  width="7%">操作</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr ng-repeat="item in items">
+                    <td>{{item.id}}</td>
+                    <td>{{item.custType}}</td>
+                    <td>{{item.name}}</td>
+                    <td>{{item.shr}}</td>
+                    <td>{{item.shsj|mysqlDatetime}}</td>
+                    <td>{{item.shsc}}</td>
+                    <td>{{item.fkrq}}</td>
+                    <td>{{item.rzje}}</td>
+                    <td>{{item.rzqx}}</td>
+                    <td>{{item.sfbl}}</td>
+                    <td>{{item.sqdzt}}</td>
+                    <td>
+                        <a ui-sref="app.manager.edit({id:item.id})"><i class="glyphicon glyphicon-edit"></i>编辑</a>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+            <table class="table" style="margin: 0px; z-index: 99;position: inherit; ">
+                <tfoot>
+                <tr ng-if="paginationInfo.totalItem==0">
+                    <td>
+                        无查询结果
+                    </td>
+                </tr>
+                <tr  ng-if="paginationInfo.totalItem>0">
+                    <td>
+                        <div class="pull-left m-t-lg ">
+                            总共{{paginationInfo.totalItem}}条&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 每页显示：{{paginationInfo.pageSize}}条
+                        </div>
+                    </td>
+                    <td>
+                        <div class="pull-right" style="margin-right: 0px">
+                            <uib-pagination boundary-links="true" total-items="paginationInfo.totalItem" ng-model="paginationInfo.curPage"
+                                            items-per-page="paginationInfo.pageSize" ng-change="pageChanged()"
+                                            max-size="paginationInfo.maxSize" boundary-link-numbers="true" rotate="false"
+                                            previous-text="&lsaquo;" next-text="&rsaquo;" first-text="&laquo;" last-text="&raquo;">
+                            </uib-pagination>
+                        </div>
+                    </td>
+                </tr>
+                </tfoot>
+            </table>
+        </div>
+
+    </div>
+</div>
