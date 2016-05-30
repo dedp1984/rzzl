@@ -5,22 +5,29 @@
         </div>
         <div class="col-sm-8 pull-right">
                 <button type="button" class="btn btn-default pull-right" ng-click="back()"><i class="glyphicon glyphicon-remove"></i>取消</button>
-                <button type="submit" class="btn btn-success pull-right m-r-sm" ng-disabled="app.$invalid" ng-click="updateAllData()">
+                <button type="submit" class="btn btn-success pull-right m-r-sm" ng-disabled="app.$invalid" ng-click="updateAllData()"
+                        ng-if="hasPrimission('app.leasingmanager.updateAllData')">
                         <i class="fa  fa-save "></i>保存
                 </button>
-                <button type="submit" ng-disabled="itemapp.sqdzt=='已锁定'" class="btn btn-danger pull-right m-r-sm" ng-disabled="app.$invalid" ng-click="lockApp()">
+                <button type="submit" ng-disabled="itemapp.sqdzt=='已锁定'" class="btn btn-danger pull-right m-r-sm"
+                        ng-disabled="app.$invalid" ng-click="lockApp()"
+                        ng-if="hasPrimission('app.leasingmanager.lock')">
                     <i class="icon-lock"></i>锁定申请单
                 </button>
-                <button type="submit" class="btn btn-sm btn-info pull-right m-r-sm"  ng-click="printConfirm()">
+                <button type="submit" class="btn btn-sm btn-info pull-right m-r-sm"  ng-click="printConfirm()"
+                        ng-if="hasPrimission('app.leasingmanager.printConfirm')">
                     <i class="fa  fa-print"></i>打印核准函
                 </button>
-                <button type="submit" class="btn btn-sm btn-info pull-right m-r-sm"  ng-click="printApp()">
+                <button type="submit" class="btn btn-sm btn-info pull-right m-r-sm"  ng-click="printApp()"
+                        ng-if="hasPrimission('app.leasingmanager.printApp')">
                     <i class="fa  fa-print"></i>打印申请单
                 </button>
-                <button type="submit" class="btn btn-sm btn-info pull-right m-r-sm"  ng-click="printCheck()">
+                <button type="submit" class="btn btn-sm btn-info pull-right m-r-sm"  ng-click="printCheck()"
+                        ng-if="hasPrimission('app.leasingmanager.printCheck')">
                     <i class="fa  fa-print"></i>打印审核表
                 </button>
-                <button type="submit" class="btn btn-sm btn-info pull-right m-r-sm"  ng-click="printApprove()">
+                <button type="submit" class="btn btn-sm btn-info pull-right m-r-sm"  ng-click="printApprove()"
+                        ng-if="hasPrimission('app.leasingmanager.printApprove')">>
                     <i class="fa  fa-print"></i>打印审批表
                 </button>
         </div>

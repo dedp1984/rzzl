@@ -393,7 +393,7 @@ app.controller('leasingController', ['$scope', '$stateParams','CarCreditRestangu
         };
         $scope.calOtherFee=function(){
             /**
-             * 附加费合计=购置税+服务费+保险费+延保费+过户费+加装费+融资手续费，需四舍五入
+             * 附加费合计=购置税+服务费+保险费+延保费+过户费+加装费，需四舍五入
              * **/
             $scope.itemapp.fjfhj=
                 (parseFloat($scope.itemapp.gzs)+
@@ -402,37 +402,38 @@ app.controller('leasingController', ['$scope', '$stateParams','CarCreditRestangu
                 parseFloat($scope.itemapp.ybf)+
                 parseFloat($scope.itemapp.ghf)+
                 parseFloat($scope.itemapp.jzf)+
-                parseFloat($scope.itemapp.rzsxf)).toFixed(2);
+                parseFloat($scope.itemapp.gpsfee)).toFixed(2);
             /**
              * 月供款= （(融资金额-服务费)/10000*产品万元系数表+(服务费/融资期限)小数进位）四舍五入
              * **/
             $scope.itemapp.ygk=Math.round(((($scope.itemapp.rzje-$scope.itemapp.fwf)/10000)*$scope.productitem.yhk)+Math.ceil($scope.itemapp.fwf/$scope.itemapp.rzqx));
-            $scope.itemapp.fjbl=(parseFloat($scope.itemapp.fjfhj)/parseFloat($scope.itemapp.pgj)).toFixed(2);
+            $scope.itemapp.fjbl=(parseFloat($scope.itemapp.fjfhj)/parseFloat($scope.itemapp.lcj)).toFixed(2);
             /*
              计算首付款：
              购置税大于0时,首付款=裸车价X首付比例+全额购置税-购置税
-             购置税=0时，首付款=裸车价X首付比例
-             首付款=首付款-GPS费用
+             首付款=裸车价X首付比例
+
              全额购置税：
+             如果汽车排量小于1.6L则，全额购置税=汽车裸车价/1.17*0.1*0.5
              如果汽车排量大于1.6L则，全额购置税=汽车裸车价/1.17*0.1
-             如果汽车排量小于1.6L则，全额购置税=汽车裸车价/1.17*0.1*（1-首付比例）
-             实放金额=融资金额-GPS-手续费-服务费
+             实放金额=融资金额-GPS-服务费
              */
             if($scope.itemapp.clyh){
-                $scope.itemapp.qegzs=parseFloat(($scope.itemapp.lcj/1.17*0.1*(1-$scope.itemapp.sfbl/100)).toFixed(2));
+                $scope.itemapp.qegzs=parseFloat(($scope.itemapp.lcj/1.17*0.1).toFixed(2));
             }else{
                 $scope.itemapp.qegzs=parseFloat(($scope.itemapp.lcj/1.17*0.1*0.5).toFixed(2));
             }
             if($scope.itemapp.gzs>0){
-                $scope.itemapp.sfk=parseFloat(($scope.itemapp.lcj*$scope.itemapp.sfbl/100+$scope.itemapp.qegzs-$scope.itemapp.gzs).toFixed(2));
+                //$scope.itemapp.sfk=parseFloat(($scope.itemapp.lcj*$scope.itemapp.sfbl/100+$scope.itemapp.qegzs-$scope.itemapp.gzs).toFixed(2));
+                $scope.itemapp.sfk=parseFloat(($scope.itemapp.lcj*$scope.itemapp.sfbl/100).toFixed(2));
             }else{
                 $scope.itemapp.sfk=parseFloat(($scope.itemapp.lcj*$scope.itemapp.sfbl/100).toFixed(2));
             };
             $scope.itemapp.sfk=Math.round($scope.itemapp.sfk)+1998-$scope.itemapp.gpsfee;
             if($scope.itemapp.gpsfee>0){
-                $scope.itemapp.sfje=Math.round(parseFloat(($scope.itemapp.rzje-1998-$scope.itemapp.rzsxf-$scope.itemapp.fwf).toFixed(2)));
+                $scope.itemapp.sfje=Math.round(parseFloat(($scope.itemapp.rzje-1998-$scope.itemapp.fwf).toFixed(2))-parseFloat($scope.itemapp.rzsxf));
             }else{
-                $scope.itemapp.sfje=Math.round(parseFloat(($scope.itemapp.rzje-$scope.itemapp.rzsxf-$scope.itemapp.fwf).toFixed(2)));
+                $scope.itemapp.sfje=Math.round(parseFloat(($scope.itemapp.rzje-$scope.itemapp.fwf).toFixed(2)))-parseFloat($scope.itemapp.rzsxf);
             }
 
 
@@ -612,6 +613,8 @@ app.controller('leasingController', ['$scope', '$stateParams','CarCreditRestangu
          * **/
         $scope.printContract=function(){
             $scope.itemapp.sqdzt="已打印";
+            $scope.clzj=$scope.tmplcj+$scope.itemapp.gzs+$scope.itemapp.gpsfee+$scope.itemapp.rzsxf+
+                $scope.itemapp.fwf+$scope.itemapp.ghf+$scope.itemapp.bxf+$scope.itemapp.jzf+$scope.itemapp.ybf;
             $scope.itemapp.save().then(function(){
                 modal.print($scope,'app/leasing/tpl/leasing-contract-form-print.html','lg');
             })

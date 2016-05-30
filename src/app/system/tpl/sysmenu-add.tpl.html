@@ -23,7 +23,7 @@
                 </div>
                 <div class="col-sm-6">
                     <label>上级菜单:</label>
-                    <select  class="form-control"  ng-change="getList()"   ng-model="item.parentid" ng-options="o.id as o.menuname for o in items" required>
+                    <select  class="form-control"  ng-change="getList({pageSize:10000})"   ng-model="item.parentid" ng-options="o.id as o.menuname for o in items" required>
                         <option value="">请选择产品类型</option>
                     </select>
                 </div>

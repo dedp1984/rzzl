@@ -29,10 +29,16 @@
                     <option value="已锁定">已锁定</option>
                 </select>
             </div>
-            <div class="col-sm-2">
+            <div class="col-sm-4">
                 <div class="input-group">
                     <span class="input-group-btn">
                         <button class="btn btn-sm btn-default" type="button" ng-click="query()"><i class="fa fa-search m-r-sm"></i>查找</button>
+                    </span>
+                     <span class="input-group-btn" ng-if="hasPrimission('app.leasingmanager.exportCredit')">
+                        <button class="btn btn-sm btn-default" type="button" ng-click="exportCredit()"><i class="fa fa-search m-r-sm"></i>导出征信查询</button>
+                    </span>
+                    <span class="input-group-btn" ng-if="hasPrimission('app.leasingmanager.exportInCase')">
+                        <button class="btn btn-sm btn-default" type="button" ng-click="exportInCase()"><i class="fa fa-search m-r-sm"></i>导出在审案件</button>
                     </span>
                 </div>
             </div>
