@@ -11,7 +11,7 @@
             </div>
             <div class="col-lg-4">
                 <label for="product">产品：</label>
-                <select  class="form-control" id="product"  ng-change="onSubProductChange()" ng-model="itemapp.productname" ng-options="o.id as o.value for o in subProducts" required>
+                <select  class="form-control" id="product"  ng-change="onSubProductChange()" ng-model="itemapp.productname" ng-options="o.id as o.value+'_利率'+o.rate  for o in subProducts" required>
                     <option value="">请选择产品</option>
                 </select>
             </div>
@@ -23,8 +23,8 @@
             </div>
         </div>
     </fieldset>
-    <fieldset class="scheduler-border">
-        <legend class="scheduler-border">融资基本信息</legend>
+    <fieldset class="scheduler-border" ng-if="!enableNewRzxxForm()">
+        <legend class="scheduler-border">融资基本信息（旧）</legend>
         <div class="row">
             <div class="col-lg-3">
                 <label for="lcj">裸车价：</label>
@@ -43,13 +43,16 @@
             </div>
             <div class="col-lg-3">
                 <label for="ybf">服务费:</label>
-                <input type="number" class="form-control" id="fwf"   step="0.01" min="0"  ng-model="itemapp.fwf" ng-blur="validfwf()" required/>
+                <input type="number" class="form-control" id="fwf"   step="0.01" min="0"  ng-model="itemapp.fwf" verify-fwf required
+                       uib-popover="{{errmsg}}"
+                       popover-trigger="none"
+                       popover-is-open="app.fwf.$error.isOver"/>
             </div>
         </div>
         <div class="row">
             <div class="col-lg-3">
                 <label for="bxf">保险费:</label>
-                <input type="number" class="form-control" id="bxf" step="0.01" min="0"  ng-model="itemapp.bxf" disabled/>
+                <input type="number" class="form-control" name="bxf" step="0.01" min="0"  ng-model="itemapp.bxf"/>
             </div>
             <div class="col-lg-3">
                 <label for="ybf">延保费:</label>
@@ -72,12 +75,11 @@
             <div class="col-lg-3">
                 <label for="ppcx">品牌车型:</label>
                 <div class="input-group m-b">
-              <span class="input-group-addon">
-                <input type="checkbox" ng-model="itemapp.clyh">>1.6L
-              </span>
+                    <span class="input-group-addon">
+                        <input type="checkbox" ng-model="itemapp.clyh">>1.6L
+                    </span>
                     <input type="text" class="form-control" id="ppcx" ng-model="itemapp.ppcx"  required/>
                 </div>
-
             </div>
             <div class="col-lg-3">
                 <label for="clys">车辆颜色：</label>
@@ -110,6 +112,126 @@
             <div class="col-lg-3">
                 <label for="sfbl">首付比例/抵押比率(百分比):</label>
                 <input type="number" class="form-control" value="0" step="0.01" min="0"  id="sfbl" ng-model="itemapp.sfbl" required/>
+            </div>
+            <div class="col-lg-3">
+                <label for="rzje">融资金额:</label>
+                <input type="number" class="form-control" id="rzje"  step="0.01" min="0"  ng-model="itemapp.rzje"  required/>
+            </div>
+        </div>
+    </fieldset>
+    <fieldset class="scheduler-border"  ng-if="enableNewRzxxForm()">
+        <legend class="scheduler-border">融资基本信息（新）</legend>
+        <div class="row">
+            <div class="col-lg-3">
+                <label for="lcj">裸车价：</label>
+                <input type="number" class="form-control" id="lcj" step="0.01" min="0" ng-model="itemapp.lcj" required/>
+            </div>
+            <div class="col-lg-3">
+                <label for="sfbl">首付比例/抵押比率(百分比):</label>
+                <input type="number" class="form-control" value="0" step="0.01" min="0"  name="sfbl" ng-model="itemapp.sfbl" verify-sfbl required
+                       uib-popover="输入错误：{{errmsg}}"
+                       popover-trigger="none"
+                       popover-is-open="app.sfbl.$error.isOver"/>
+            </div>
+            <div class="col-lg-3">
+                <label for="producttype">GPS价格档位：</label>
+                <div class="input-group m-b">
+                    <select  class="form-control" ng-change="onGpsLvlSelected()"  ng-model="itemapp.reserver9" ng-options="o.id as o.lvlname for o in gpslvls" required>
+                        <option value="">请选择</option>
+                    </select>
+                     <span class="input-group-addon">
+                         <input type="checkbox" ng-click="onSFRZChecked()" ng-model="itemapp.reserver8">是否融GPS
+                     </span>
+                </div>
+            </div>
+            <div class="col-lg-3">
+                <label for="gpsfee">GPS费用:</label>
+                <input type="number" class="form-control" id="gpsfee" step="0.01" min="0" ng-model="itemapp.gpsfee"  required/>
+            </div>
+
+        </div>
+        <div class="row">
+            <div class="col-lg-3">
+                <label for="bxf">购置税:</label>
+                <input type="number" class="form-control" name="gzs"  step="0.01" min="0"  ng-model="itemapp.gzs" verify-gzs required
+                       ng-disabled="itemapp.producttype=='全款再融'"
+                       uib-popover="购置税超限：{{errmsg}}"
+                       popover-trigger="none"
+                       popover-is-open="app.gzs.$error.isOver"/>
+            </div>
+            <div class="col-lg-3">
+                <label for="ybf">服务费:</label>
+                <input type="number" class="form-control" name="fwf"   step="0.01" min="0"  ng-model="itemapp.fwf" verify-fwf required
+                       ng-disabled="itemapp.producttype=='全款再融'"
+                       uib-popover="服务费超限：{{errmsgfwf}}"
+                       popover-trigger="none"
+                       popover-is-open="app.fwf.$error.isOver"/>
+            </div>
+            <div class="col-lg-3">
+                <label for="bxf">保险费:</label>
+                <input type="number" class="form-control" name="bxf" step="0.01" min="0"  ng-model="itemapp.bxf" verify-bxf
+                       ng-disabled="itemapp.producttype=='全款再融'"
+                       uib-popover="保险费+购置税≤裸车价*15%"
+                       popover-trigger="none"
+                       popover-is-open="app.bxf.$error.isOver"/>
+            </div>
+            <div class="col-lg-3">
+                <label for="ybf">延保费:</label>
+                <input type="number" class="form-control" id="ybf" step="0.01" min="0"  ng-model="itemapp.ybf" disabled/>
+            </div>
+
+        </div>
+        <div class="row">
+            <div class="col-lg-3">
+                <label for="ghf">过户费：</label>
+                <input type="number" class="form-control" id="ghf" step="0.01" min="0"  ng-model="itemapp.ghf" disabled/>
+            </div>
+            <div class="col-lg-3">
+                <label for="jzf">加装费:</label>
+                <input type="number" class="form-control" id="jzf" step="0.01" ng-model="itemapp.jzf" disabled/>
+            </div>
+            <div class="col-lg-3">
+                <label for="rzsxf">融资手续费:</label>
+                <input type="number" class="form-control" id="rzsxf"  step="0.01" min="0" ng-model="itemapp.rzsxf" disabled required/>
+            </div>
+            <div class="col-lg-3">
+                <label for="ppcx">品牌车型:</label>
+                <div class="input-group m-b">
+              <span class="input-group-addon">
+                <input type="checkbox" ng-model="itemapp.clyh">>1.6L
+              </span>
+                    <input type="text" class="form-control" id="ppcx" ng-model="itemapp.ppcx"  required/>
+                </div>
+
+            </div>
+
+        </div>
+        <div class="row">
+            <div class="col-lg-3">
+                <label for="clys">车辆颜色：</label>
+                <input type="text" class="form-control" id="clys" ng-model="itemapp.clys" required/>
+            </div>
+            <div class="col-lg-3">
+                <label for="scs">生产商:</label>
+                <input type="text" class="form-control" id="scs" ng-model="itemapp.scs" required/>
+            </div>
+            <div class="col-lg-3">
+                <label for="cjh">车架号:</label>
+                <input type="text" class="form-control" id="cjh" ng-model="itemapp.cjh" ng-required="itemapp.producttype=='二手车融'||itemapp.producttype=='全款再融'"/>
+            </div>
+            <div class="col-lg-3">
+                <label for="fdjh">发动机号:</label>
+                <input type="text" class="form-control" id="fdjh" ng-model="itemapp.fdjh" ng-required="itemapp.producttype=='二手车融'||itemapp.producttype=='全款再融'"/>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-lg-3">
+                <label for="pgj">售价/评估价：</label>
+                <input type="number" class="form-control" id="pgj"  step="0.01" min="0"  ng-model="itemapp.pgj" required/>
+            </div>
+            <div class="col-lg-3">
+                <label for="bzj">保证金:</label>
+                <input type="number" class="form-control" id="bzj"  step="0.01" min="0"  ng-model="itemapp.bzj" disabled/>
             </div>
             <div class="col-lg-3">
                 <label for="rzje">融资金额:</label>

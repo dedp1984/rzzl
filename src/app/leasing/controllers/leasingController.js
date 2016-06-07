@@ -43,6 +43,7 @@ app.controller('leasingController', ['$scope', '$stateParams','CarCreditRestangu
             $scope.itemapp.xl=1;
             $scope.itemapp.hyzk=1;
             $scope.itemapp.zsqs=1;
+            $scope.itemapp.reserver3=0;
         };
         /**
          * 初始化申请复选框组数据
@@ -63,6 +64,9 @@ app.controller('leasingController', ['$scope', '$stateParams','CarCreditRestangu
             $scope.tmpjtcy.fm=tmpjtcy[2]=='true';
             $scope.tmpjtcy.qq=tmpjtcy[3]=='true';
             $scope.tmpjtcy.ts=tmpjtcy[4]=='true';
+
+            var rzje=parseFloat(item.lcj)*(1-parseFloat(item.sfbl)/100);
+            $scope.gpslvls=CarCreditRestangular.all("leasingapps").all("getBranchAvailablyGpsLvl").getList({'rzje':rzje}).$object;
         };
         /**
          * 初始化申请单录入节点数据
@@ -178,6 +182,9 @@ app.controller('leasingController', ['$scope', '$stateParams','CarCreditRestangu
                 $scope.itemapp.ghf+
                 $scope.itemapp.jzf).toFixed(2)));
                 $scope.calOtherFee();
+                if($scope.itemapp.fjfhj>$scope.itemapp.lcj*0.2){
+
+                }
             });
             $scope.$watch('itemapp.lcj',function(newVal,oldVal){
                $scope.itemapp.pgj=$scope.itemapp.lcj;
@@ -254,7 +261,20 @@ app.controller('leasingController', ['$scope', '$stateParams','CarCreditRestangu
                 if(newVal==oldVal)
                     return;
                 $scope.itemapp.tzr=$scope.tmptzr.fq+','+$scope.tmptzr.zv+','+$scope.tmptzr.fm+','+$scope.tmptzr.qq+','+$scope.tmptzr.ts+','+$scope.tmptzr.py;
-            })
+            });
+
+            /**
+             * 根据汽车融资金额判断判断经销商可选GPS档位
+             * **/
+            $scope.$watchGroup(['itemapp.lcj','itemapp.sfbl'],function(newVal,oldVal){
+                if(newVal==oldVal)
+                    return;
+                var rzje=parseFloat($scope.itemapp.lcj)*(1-parseFloat($scope.itemapp.sfbl)/100);
+                if(isNaN(rzje)||angular.isUndefined(rzje))
+                    return;
+                $scope.itemapp.reserver9="";
+                $scope.gpslvls=CarCreditRestangular.all("leasingapps").all("getBranchAvailablyGpsLvl").getList({'rzje':rzje}).$object;
+            });
         };
 
 
@@ -338,22 +358,31 @@ app.controller('leasingController', ['$scope', '$stateParams','CarCreditRestangu
 
         };
         $scope.saveCheck=function(status) {
-            $scope.itemapp.sqdzt=status;
-            CarCreditRestangular.all('leasingchecks').all("saveCheck")
-                .post({'app': $scope.itemapp, 'check': $scope.itemcheck, 'approve': $scope.itemapprove})
-                .then(function (response) {
-                    if(status=='待审批'){
-                        $rootScope.back();
-                        toaster.pop('success', '操作提醒',  '提交审核信息成功');
-                    }
-                    else if(status=='审核退回')
-                    {
-                        $rootScope.back();
-                        toaster.pop('success', '操作提醒',  '审核退回成功');
-                    }
-                    else
-                        toaster.pop('success', '操作提醒',  '保存审核信息成功');
-                });
+            var confirmMsg="确认操作？";
+            if(status=='待审批'){
+                if($scope.itemapp.producttype=="二手车融"){
+                    confirmMsg="此产品为二手车融，请确认是否填写评估价";
+                }
+            };
+            modal.confirm("操作提醒",confirmMsg).then(function(){
+                $scope.itemapp.sqdzt=status;
+                CarCreditRestangular.all('leasingchecks').all("saveCheck")
+                    .post({'app': $scope.itemapp, 'check': $scope.itemcheck, 'approve': $scope.itemapprove})
+                    .then(function (response) {
+                        if(status=='待审批'){
+                            $rootScope.back();
+                            toaster.pop('success', '操作提醒',  '提交审核信息成功');
+                        }
+                        else if(status=='审核退回')
+                        {
+                            $rootScope.back();
+                            toaster.pop('success', '操作提醒',  '审核退回成功');
+                        }
+                        else
+                            toaster.pop('success', '操作提醒',  '保存审核信息成功');
+                    });
+            })
+
         };
         $scope.checkReject=function(){
             var $uibModalInstance=$uibModal.open({
@@ -406,7 +435,12 @@ app.controller('leasingController', ['$scope', '$stateParams','CarCreditRestangu
             /**
              * 月供款= （(融资金额-服务费)/10000*产品万元系数表+(服务费/融资期限)小数进位）四舍五入
              * **/
-            $scope.itemapp.ygk=Math.round(((($scope.itemapp.rzje-$scope.itemapp.fwf)/10000)*$scope.productitem.yhk)+Math.ceil($scope.itemapp.fwf/$scope.itemapp.rzqx));
+            if(!$scope.enableNewRzxxForm()){
+                $scope.itemapp.ygk=Math.round(((($scope.itemapp.rzje-$scope.itemapp.fwf)/10000)*$scope.productitem.yhk)+Math.ceil($scope.itemapp.fwf/$scope.itemapp.rzqx));
+            }else{
+                $scope.itemapp.ygk=Math.round((($scope.itemapp.rzje)/10000)*$scope.productitem.yhk);
+            }
+
             $scope.itemapp.fjbl=(parseFloat($scope.itemapp.fjfhj)/parseFloat($scope.itemapp.lcj)).toFixed(2);
             /*
              计算首付款：
@@ -429,12 +463,18 @@ app.controller('leasingController', ['$scope', '$stateParams','CarCreditRestangu
             }else{
                 $scope.itemapp.sfk=parseFloat(($scope.itemapp.lcj*$scope.itemapp.sfbl/100).toFixed(2));
             };
-            $scope.itemapp.sfk=Math.round($scope.itemapp.sfk)+1998-$scope.itemapp.gpsfee;
-            if($scope.itemapp.gpsfee>0){
-                $scope.itemapp.sfje=Math.round(parseFloat(($scope.itemapp.rzje-1998-$scope.itemapp.fwf).toFixed(2))-parseFloat($scope.itemapp.rzsxf));
+            //$scope.itemapp.sfk=Math.round($scope.itemapp.sfk)+1998-$scope.itemapp.gpsfee;
+            if(!$scope.enableNewRzxxForm()){
+                if($scope.itemapp.gpsfee>0){
+                    $scope.itemapp.sfje=Math.round(parseFloat(($scope.itemapp.rzje-1998-$scope.itemapp.fwf).toFixed(2))-parseFloat($scope.itemapp.rzsxf));
+                }else{
+                    $scope.itemapp.sfje=Math.round(parseFloat(($scope.itemapp.rzje-$scope.itemapp.fwf).toFixed(2)))-parseFloat($scope.itemapp.rzsxf);
+                }
             }else{
-                $scope.itemapp.sfje=Math.round(parseFloat(($scope.itemapp.rzje-$scope.itemapp.fwf).toFixed(2)))-parseFloat($scope.itemapp.rzsxf);
+                //新版本放款金额=融资金额-gps费用+经销商返佣-二手车评估费
+                $scope.itemapp.sfje=Math.round(parseFloat($scope.itemapp.rzje-$scope.itemapp.reserver1+$scope.itemapp.reserver2-$scope.itemapp.reserver3));
             }
+
 
 
 
@@ -548,23 +588,29 @@ app.controller('leasingController', ['$scope', '$stateParams','CarCreditRestangu
          * 提交审批
          * **/
         $scope.commitApprove=function(result) {
-            $scope.itemapp.sqdzt=result;
-            CarCreditRestangular.all('leasingapproves')
-                .post({'app': $scope.itemapp, 'check': $scope.itemcheck, 'approve': $scope.itemapprove})
-                .then(function (response) {
-                    $rootScope.back();
-                    toaster.pop('success', '操作提醒',  '提交'+result+'成功');
-                });
+            modal.confirm("操作提醒","确认提交？").then(function(){
+                $scope.itemapp.sqdzt=result;
+                CarCreditRestangular.all('leasingapproves')
+                    .post({'app': $scope.itemapp, 'check': $scope.itemcheck, 'approve': $scope.itemapprove})
+                    .then(function (response) {
+                        $rootScope.back();
+                        toaster.pop('success', '操作提醒',  '提交'+result+'成功');
+                    });
+            })
+
         };
         /**
          * 发放核准函确认
          * **/
         $scope.commitConfirm=function(){
-            $scope.itemapp.sqdzt="待签约";
-            $scope.itemapp.save().then(function(){
-                $rootScope.back();
-                toaster.pop('success', '操作提醒',  '发放核准函成功');
+            modal.confirm("操作提醒","确认提交？").then(function(){
+                $scope.itemapp.sqdzt="待签约";
+                $scope.itemapp.save().then(function(){
+                    $rootScope.back();
+                    toaster.pop('success', '操作提醒',  '发放核准函成功');
+                })
             })
+
         };
         /**
          * 保存申请单、审核表、审批表数据
@@ -612,14 +658,73 @@ app.controller('leasingController', ['$scope', '$stateParams','CarCreditRestangu
          * 打印合同
          * **/
         $scope.printContract=function(){
-            $scope.itemapp.sqdzt="已打印";
-            $scope.clzj=$scope.tmplcj+$scope.itemapp.gzs+$scope.itemapp.gpsfee+$scope.itemapp.rzsxf+
-                $scope.itemapp.fwf+$scope.itemapp.ghf+$scope.itemapp.bxf+$scope.itemapp.jzf+$scope.itemapp.ybf;
-            $scope.itemapp.save().then(function(){
-                modal.print($scope,'app/leasing/tpl/leasing-contract-form-print.html','lg');
-            })
-        }
+            var $uibModalInstance=$uibModal.open({
+                animation: true,
+                backdrop:'false',
+                templateUrl: 'app/leasing/tpl/dialog-select_contract-version.html',
+                controller: function($scope){
+                    $scope.ok=function(){
+                        $uibModalInstance.close($scope.version);
+                    };
+                    $scope.cancel = function () {
+                        $uibModalInstance.dismiss('cancel');
+                    };
+                }
+            });
+            $uibModalInstance.result.then(function(version){
+                $scope.itemapp.sqdzt="已打印";
+                $scope.clzj=$scope.tmplcj+$scope.itemapp.gzs+$scope.itemapp.gpsfee+$scope.itemapp.rzsxf+
+                    $scope.itemapp.fwf+$scope.itemapp.ghf+$scope.itemapp.bxf+$scope.itemapp.jzf+$scope.itemapp.ybf;
+                $scope.itemapp.save().then(function(){
+                    if(version=="v2"){
+                        modal.print($scope,'app/leasing/tpl/leasing-contract-form-print-v2.html','lg');
+                    }else{
+                        modal.print($scope,'app/leasing/tpl/leasing-contract-form-print.html','lg');
+                    }
 
+                })
+            })
+
+        };
+
+        /**
+         * 判断是否启用新的融资基本信息模
+         * 规则：当为新创建或申请单日期大于2016年6月1号则启用新融资基本信息
+         * **/
+        $scope.enableNewRzxxForm=function(){
+            if(angular.isUndefined($scope.itemapp.id)||parseInt($scope.itemapp.id.split("-")[1])>=20160531){
+                return true;
+            }else{
+                return false;
+            }
+        };
+
+        $scope.onGpsLvlSelected=function(){
+            console.log($scope.itemapp.reserver9);
+            for(var i=0;i<$scope.gpslvls.length;i++){
+                var item=$scope.gpslvls[i];
+                if(item.id==$scope.itemapp.reserver9){
+                    if($scope.itemapp.reserver8){
+                        $scope.itemapp.gpsfee=item.xsj;
+                    }else{
+                        $scope.itemapp.gpsfee=0;
+                    }
+                    $scope.itemapp.reserver1=item.xsj;
+                    $scope.itemapp.reserver2=item.jxsfybl;
+                    $scope.itemapp.jxsfybl=item.jxsfybl;
+
+                }
+            }
+        };
+        $scope.onSFRZChecked=function(){
+            if($scope.itemapp.reserver8){
+                $scope.itemapp.gpsfee=$scope.itemapp.reserver1;
+                $scope.itemapp.reserver2=$scope.itemapp.jxsfybl;
+            }else{
+                $scope.itemapp.gpsfee=0;
+                $scope.itemapp.reserver2=0;
+            }
+        }
 
     }])
 

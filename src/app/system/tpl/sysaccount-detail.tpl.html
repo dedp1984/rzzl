@@ -50,7 +50,7 @@
                     </div>
                 </div>
                 <div class="line line-dashed b-b line-sm pull-in"></div>
-                <div class="row" ng-init="initUserRoles()()" >
+                <div class="row" ng-init="initUserRoles()" >
                     <div class="col-sm-6">
                         <label>可选角色:</label>
                         <select  multiple class="form-control" ng-model="sysRole" ng-dblclick="selectSysRoles()" ng-options="o.id as o.rolename for o in allSysRoles">
