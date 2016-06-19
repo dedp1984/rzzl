@@ -9,7 +9,7 @@
                 <button type="submit" class="btn btn-dark pull-right m-r-sm"  ng-click="commitApprove('审批退回')">
                     <i class="fa  fa-check"></i>审批退回
                 </button>
-                <button type="submit" class="btn btn-success pull-right m-r-sm" ng-disabled="app.$invalid" ng-click="commitApprove('待确认')">
+                <button type="submit" class="btn btn-success pull-right m-r-sm" ng-disabled="app.$invalid||itemapprove.jyjg=='5'" ng-click="commitApprove('待确认')">
                     <i class="fa  fa-check"></i>审批通过
                 </button>
                 <button type="submit" class="btn btn-danger pull-right m-r-sm"  ng-click="commitApprove('审批拒绝')">

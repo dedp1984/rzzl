@@ -577,6 +577,7 @@ app.controller('leasingController', ['$scope', '$stateParams','CarCreditRestangu
             $scope.dkphase='融资(抵押)期限：自'+year+'年'+month+'月'+date+'日至'
                                 +(year+a)+'年'+b+'月'+date+'日止(共'+$scope.itemapp.rzqx+'期)';
             $scope.tmplcj=$scope.itemapp.lcj;
+            $scope.tmpsfk=$scope.itemapp.sfk;
             $scope.clzj=$scope.tmplcj+$scope.itemapp.gzs+$scope.itemapp.gpsfee+$scope.itemapp.rzsxf+
                 $scope.itemapp.fwf+$scope.itemapp.ghf+$scope.itemapp.bxf+$scope.itemapp.jzf+$scope.itemapp.ybf;
         };
@@ -658,41 +659,53 @@ app.controller('leasingController', ['$scope', '$stateParams','CarCreditRestangu
          * 打印合同
          * **/
         $scope.printContract=function(){
-            var $uibModalInstance=$uibModal.open({
-                animation: true,
-                backdrop:'false',
-                templateUrl: 'app/leasing/tpl/dialog-select_contract-version.html',
-                controller: function($scope){
-                    $scope.ok=function(){
-                        $uibModalInstance.close($scope.version);
-                    };
-                    $scope.cancel = function () {
-                        $uibModalInstance.dismiss('cancel');
-                    };
-                }
-            });
-            $uibModalInstance.result.then(function(version){
+            if($scope.itemapp.jxsid=='B202'||$scope.itemapp.jxsid=='B203'||$scope.itemapp.jxsid=='B204'){
+                var $uibModalInstance=$uibModal.open({
+                    animation: true,
+                    backdrop:'false',
+                    templateUrl: 'app/leasing/tpl/dialog-select_contract-version.html',
+                    controller: function($scope){
+                        $scope.ok=function(){
+                            $uibModalInstance.close($scope.version);
+                        };
+                        $scope.cancel = function () {
+                            $uibModalInstance.dismiss('cancel');
+                        };
+                    }
+                });
+                $uibModalInstance.result.then(function(version){
+                    $scope.itemapp.sqdzt="已打印";
+                    $scope.clzj=$scope.tmplcj+$scope.itemapp.gzs+$scope.itemapp.gpsfee+$scope.itemapp.rzsxf+
+                        $scope.itemapp.fwf+$scope.itemapp.ghf+$scope.itemapp.bxf+$scope.itemapp.jzf+$scope.itemapp.ybf;
+                    $scope.tmpsfk=$scope.itemapp.sfk+$scope.tmplcj-$scope.itemapp.lcj;
+                    $scope.itemapp.save().then(function(){
+                        if(version=="v2"){
+                            modal.print($scope,'app/leasing/tpl/leasing-contract-form-print-v2.html','lg');
+                        }else{
+                            modal.print($scope,'app/leasing/tpl/leasing-contract-form-print.html','lg');
+                        }
+
+                    })
+                })
+            }else{
                 $scope.itemapp.sqdzt="已打印";
                 $scope.clzj=$scope.tmplcj+$scope.itemapp.gzs+$scope.itemapp.gpsfee+$scope.itemapp.rzsxf+
                     $scope.itemapp.fwf+$scope.itemapp.ghf+$scope.itemapp.bxf+$scope.itemapp.jzf+$scope.itemapp.ybf;
+                $scope.tmpsfk=$scope.itemapp.sfk+$scope.tmplcj-$scope.itemapp.lcj;
                 $scope.itemapp.save().then(function(){
-                    if(version=="v2"){
-                        modal.print($scope,'app/leasing/tpl/leasing-contract-form-print-v2.html','lg');
-                    }else{
-                        modal.print($scope,'app/leasing/tpl/leasing-contract-form-print.html','lg');
-                    }
-
+                    modal.print($scope,'app/leasing/tpl/leasing-contract-form-print.html','lg');
                 })
-            })
+            }
+
 
         };
 
         /**
          * 判断是否启用新的融资基本信息模
-         * 规则：当为新创建或申请单日期大于2016年6月1号则启用新融资基本信息
+         * 规则：当为新创建或申请单日期大于2016年6月18号则启用新融资基本信息
          * **/
         $scope.enableNewRzxxForm=function(){
-            if(angular.isUndefined($scope.itemapp.id)||parseInt($scope.itemapp.id.split("-")[1])>=20160531){
+            if(angular.isUndefined($scope.itemapp.id)||parseInt($scope.itemapp.id.split("-")[1])>=20160618){
                 return true;
             }else{
                 return false;
@@ -704,25 +717,33 @@ app.controller('leasingController', ['$scope', '$stateParams','CarCreditRestangu
             for(var i=0;i<$scope.gpslvls.length;i++){
                 var item=$scope.gpslvls[i];
                 if(item.id==$scope.itemapp.reserver9){
-                    if($scope.itemapp.reserver8){
-                        $scope.itemapp.gpsfee=item.xsj;
-                    }else{
-                        $scope.itemapp.gpsfee=0;
-                    }
                     $scope.itemapp.reserver1=item.xsj;
+                    $scope.itemapp.gpsxsj=item.xsj
                     $scope.itemapp.reserver2=item.jxsfybl;
                     $scope.itemapp.jxsfybl=item.jxsfybl;
+                    if($scope.itemapp.reserver8){
+                        $scope.itemapp.gpsfee=$scope.itemapp.gpsxsj;
+                        $scope.itemapp.reserver2=$scope.itemapp.jxsfybl;
+                        $scope.itemapp.reserver1=$scope.itemapp.gpsxsj;
+                    }else{
+                        $scope.itemapp.gpsfee=0;
+                        $scope.itemapp.reserver2=0;
+                        $scope.itemapp.reserver1=0;
+                    }
+
 
                 }
             }
         };
         $scope.onSFRZChecked=function(){
             if($scope.itemapp.reserver8){
-                $scope.itemapp.gpsfee=$scope.itemapp.reserver1;
+                $scope.itemapp.gpsfee=$scope.itemapp.gpsxsj;
                 $scope.itemapp.reserver2=$scope.itemapp.jxsfybl;
+                $scope.itemapp.reserver1=$scope.itemapp.gpsxsj;
             }else{
                 $scope.itemapp.gpsfee=0;
                 $scope.itemapp.reserver2=0;
+                $scope.itemapp.reserver1=0;
             }
         }
 
