@@ -735,6 +735,7 @@ app.controller('leasingController', ['$scope', '$stateParams','CarCreditRestangu
                 }
             }
         };
+        /*
         $scope.onSFRZChecked=function(){
             if($scope.itemapp.reserver8){
                 $scope.itemapp.gpsfee=$scope.itemapp.gpsxsj;
@@ -745,7 +746,8 @@ app.controller('leasingController', ['$scope', '$stateParams','CarCreditRestangu
                 $scope.itemapp.reserver2=0;
                 $scope.itemapp.reserver1=0;
             }
-        }
+        }*/
+        $scope.onSFRZChecked=$scope.onGpsLvlSelected;
 
     }])
 
