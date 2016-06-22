@@ -1,0 +1,36 @@
+<form name="form">
+    <div class="modal-header">
+        <h4 class="modal-title"><i class="fa fa-exclamation-circle"></i>审核退回</h4>
+    </div>
+    <div class="modal-body">
+        <table class="table table-condensed table-hover  small b-t b-light">
+            <thead>
+            <tr>
+                <th  width="10%">申请编号</th>
+                <th  width="8%">等级</th>
+                <th  width="9%">姓名</th>
+                <th  width="7%">批核金额</th>
+                <th  width="7%">审批期限</th>
+                <th  width="7%">首付比例</th>
+                <th  width="7%">案件状态</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr ng-repeat="item in vm.indata">
+                <td>{{item.id}}</td>
+                <td>{{item.custType}}</td>
+                <td>{{item.name}}</td>
+                <td>{{item.rzje}}</td>
+                <td>{{item.rzqx}}</td>
+                <td>{{item.sfbl}}</td>
+                <td>{{item.sqdzt}}</td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+    <div class="modal-footer">
+        <button class="btn btn-success" type="button" ng-click="ok()">确定</button>
+        <button class="btn btn-warning" type="button" ng-click="cancel()">关闭</button>
+    </div>
+</form>
+
