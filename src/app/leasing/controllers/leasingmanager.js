@@ -7,6 +7,7 @@ app.controller('leasingmanager', ['$scope', 'toaster', '$state','CarCreditRestan
             });
         };
         $scope.pageChanged=function(){
+            $scope.selectall=false;
             $scope.initList();
         }
         $scope.query=function(){
@@ -60,7 +61,11 @@ app.controller('leasingmanager', ['$scope', 'toaster', '$state','CarCreditRestan
                     if(item.checked==false){
                         $scope.selected.splice(i,1);
                         $scope.selectall=false;
+                        $scope.updateAllSelect($scope.items);
                         return ;
+                    }else{
+                        $scope.updateAllSelect($scope.items);
+                        return;
                     }
                 }
             };
@@ -68,14 +73,15 @@ app.controller('leasingmanager', ['$scope', 'toaster', '$state','CarCreditRestan
                 response.checked=true;
                 $scope.selected.push(response);
             });
+            $scope.updateAllSelect($scope.items);
+        };
+        $scope.updateAllSelect=function(items){
         };
         $scope.selectAll=function(){
             for(var i=0;i<$scope.items.length;i++){
                 $scope.items[i].checked=$scope.selectall;
                 $scope.addToSelected($scope.items[i]);
-                $scope.items[i].checked=true;
             }
-            $scope.selectall=true;
 
         }
         $scope.showSelected=function(){
@@ -93,11 +99,12 @@ app.controller('leasingmanager', ['$scope', 'toaster', '$state','CarCreditRestan
                         items[i].checked=true;
                     }
                 }
-            }
+            };
+            $scope.updateAllSelect($scope.items);
         };
         $scope.clickDownload=function(){
 
-            var str="序号,经销商名称,经销商开户银行,经销商放款账号,客户姓名,身份证号,还款卡开户行,还款账号,合同金额,放款金额,期数"
+            var str="序号,经销商名称,经销商开户银行,经销商放款账号,客户姓名,身份证号,还款卡开户行,还款账号,合同金额,放款金额,期数,经销商返佣"
             for(var i=0;i<$scope.selected.length;i++){
                 var item=$scope.selected[i];
                 str+='\n'+i+',';
