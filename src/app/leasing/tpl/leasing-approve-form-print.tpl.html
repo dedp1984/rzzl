@@ -72,8 +72,8 @@
                                     <option value="C">C类</option>
                                 </select>
                             </td>
-                            <td style="width: 10%" colspan="1">二手车评估费：</td>
-                            <td style="width:20%" colspan="2">{{itemapp.reserver3}}</td>
+                            <td style="width: 10%" colspan="1" ng-show="itemapp.producttype=='二手车融'">二手车评估费：</td>
+                            <td style="width:20%" colspan="2" ng-show="itemapp.producttype=='二手车融'">{{itemapp.reserver3}}</td>
                         </tr>
                         <tr>
                             <td  colspan="10" class="print-table title">融资基本信息</td>

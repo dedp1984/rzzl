@@ -100,6 +100,31 @@ angular.module('app')
                     }
                 });
                 return $uibModalInstance.result;
+            },
+            show:function(templateUrl,indata){
+                var $uibModalInstance=$uibModal.open({
+                    animation: true,
+                    backdrop:'false',
+                    resolve: {
+                        indata: function () {
+                            return indata;
+                        }
+                    },
+                    templateUrl: templateUrl,
+                    controller: function($scope,indata){
+                        $scope.vm={};
+                        $scope.vm.indata=indata;
+                        $scope.vm.outdata={};
+                        $scope.ok=function(){
+                            $uibModalInstance.close($scope.vm);
+                        };
+                        $scope.cancel = function () {
+                            $uibModalInstance.dismiss('cancel');
+                        };
+                    },
+                    size: 'lg'
+                });
+                return $uibModalInstance.result;
             }
         }
     })
