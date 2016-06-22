@@ -470,9 +470,12 @@ app.controller('leasingController', ['$scope', '$stateParams','CarCreditRestangu
                 }else{
                     $scope.itemapp.sfje=Math.round(parseFloat(($scope.itemapp.rzje-$scope.itemapp.fwf).toFixed(2)))-parseFloat($scope.itemapp.rzsxf);
                 }
-            }else{
+            }else if(!$scope.enableNewSfje()&&$scope.enableNewRzxxForm()){
                 //新版本放款金额=融资金额-gps费用+经销商返佣-二手车评估费
                 $scope.itemapp.sfje=Math.round(parseFloat($scope.itemapp.rzje-$scope.itemapp.reserver1+$scope.itemapp.reserver2-$scope.itemapp.reserver3));
+            }else{
+                //新版本放款金额=融资金额-gps费用-二手车评估费
+                $scope.itemapp.sfje=Math.round(parseFloat($scope.itemapp.rzje-$scope.itemapp.reserver1-$scope.itemapp.reserver3));
             }
 
 
@@ -706,6 +709,13 @@ app.controller('leasingController', ['$scope', '$stateParams','CarCreditRestangu
          * **/
         $scope.enableNewRzxxForm=function(){
             if(angular.isUndefined($scope.itemapp.id)||parseInt($scope.itemapp.id.split("-")[1])>=20160618){
+                return true;
+            }else{
+                return false;
+            }
+        };
+        $scope.enableNewSfje=function(){
+            if(angular.isUndefined($scope.itemapp.id)||parseInt($scope.itemapp.id.split("-")[1])>=20160622){
                 return true;
             }else{
                 return false;
