@@ -74,10 +74,10 @@
                     <option value="C">C类</option>
                 </select>
             </div>
-            <div class="col-lg-4" ng-show="itemapp.producttype=='二手车融'">
-                <label>二手车评估费：</label>
+            <div class="col-lg-4" ng-show="itemapp.producttype=='二手车融'||itemapp.producttype=='全款再融'">
+                <label>评估费：</label>
                 <input type="number" class="form-control" name="escpgf" ng-model="itemapp.reserver3" verify-escpgf
-                       uib-popover="二手车评估费只能为0或者300"
+                       uib-popover="评估费只能为0或者300"
                        popover-trigger="focus"
                        popover-is-open="app.escpgf.$error.isOver"/>
             </div>
