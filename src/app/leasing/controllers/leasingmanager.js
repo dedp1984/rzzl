@@ -132,5 +132,16 @@ app.controller('leasingmanager', ['$scope', 'toaster', '$state','CarCreditRestan
             link.download ="在审案件表.csv";
             link.click();
             window.URL.revokeObjectURL(link.href);
+        };
+        $scope.exportKhhzhzb=function(){
+            var ids="";
+            angular.forEach($scope.selected,function(item){
+                ids+=item.id+',';
+            })
+            CarCreditRestangular.one("leasingapps","exportKhhzhzb").withHttpConfig({responseType: 'arraybuffer'}).get({'ids':ids}).then(function(response){
+                console.log(response);
+                var blob = new Blob([response], {type: "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"});
+                $scope.saveAs(blob, '客户还租汇总表' + '.xls');
+            });
         }
     }]);
