@@ -69,10 +69,7 @@ app.controller('leasingmanager', ['$scope', 'toaster', '$state','CarCreditRestan
                     }
                 }
             };
-            CarCreditRestangular.one("leasingapps/getOnApproveRecord",item.id).get().then(function(response){
-                response.checked=true;
-                $scope.selected.push(response);
-            });
+            $scope.selected.push(item)
             $scope.updateAllSelect($scope.items);
         };
         $scope.updateAllSelect=function(items){
@@ -103,45 +100,39 @@ app.controller('leasingmanager', ['$scope', 'toaster', '$state','CarCreditRestan
             $scope.updateAllSelect($scope.items);
         };
         $scope.clickDownload=function(){
-            var str="序号,经销商名称,经销商开户银行,经销商放款账号,客户姓名,身份证号,还款卡开户行,还款账号,合同金额,放款金额,期数,经销商返佣"
-            for(var i=0;i<$scope.selected.length;i++){
-                var item=$scope.selected[i];
-                str+='\n'+i+',';
-                str+=(item.branchname==undefined?" ":item.branchname)+",";
-                str+=(item.openbankname==undefined?" ":item.openbankname)+",";
-                str+=(item.openbankno==undefined?" ":"'"+item.openbankno)+" ,";
-                str+=(item.name==undefined?" ":item.name)+",";
-                str+=(item.idno==undefined?" ":"'"+item.idno)+" ,";
-                str+=(item.refundbankno==undefined?"":"'"+item.refundbankno)+" ,";
-                str+=(item.refundacctno==undefined?"":"'"+item.refundacctno)+" ,";
-                str+=(item.rzje==undefined?"":item.rzje)+",";
-                if(angular.isUndefined(item.id)||parseInt(item.id.split("-")[1])>=20160622){
-                    var sfje=Math.round(parseFloat(item.rzje-item.reserver1-item.reserver3));
-                    str+=sfje+",";
-                }else{
-                    var sfje=Math.round(parseFloat(item.rzje-item.reserver1+item.reserver2-item.reserver3));
-                    str+=sfje+",";
-                }
-                str+=(item.rzqx==undefined?"":item.rzqx)+",";
-                str+=(item.reserver2)+",";
-
-            }
-            str =  encodeURIComponent(str);
-            var link = document.createElement('a');
-            link.href = "data:text/csv;charset=utf-8,\ufeff"+str;
-            link.download ="在审案件表.csv";
-            link.click();
-            window.URL.revokeObjectURL(link.href);
+            var ids="";
+            var i=1;
+            angular.forEach($scope.selected,function(item){
+                ids+=(i++)+":"+item.id+',';
+            })
+            CarCreditRestangular.one("leasingapps","exportZsajb").withHttpConfig({responseType: 'arraybuffer'}).get({'ids':ids}).then(function(response){
+                console.log(response);
+                var blob = new Blob([response], {type: "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"});
+                $scope.saveAs(blob, '在审案件表' + '.xls');
+            });
         };
         $scope.exportKhhzhzb=function(){
             var ids="";
+            var i=1;
             angular.forEach($scope.selected,function(item){
-                ids+=item.id+',';
+                ids+=(i++)+":"+item.id+',';
             })
             CarCreditRestangular.one("leasingapps","exportKhhzhzb").withHttpConfig({responseType: 'arraybuffer'}).get({'ids':ids}).then(function(response){
                 console.log(response);
                 var blob = new Blob([response], {type: "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"});
                 $scope.saveAs(blob, '客户还租汇总表' + '.xls');
+            });
+        }
+        $scope.exportKhhkxxb=function(){
+            var ids="";
+            var i=1;
+            angular.forEach($scope.selected,function(item){
+                ids+=(i++)+":"+item.id+',';
+            })
+            CarCreditRestangular.one("leasingapps","exportKhhkxxb").withHttpConfig({responseType: 'arraybuffer'}).get({'ids':ids}).then(function(response){
+                console.log(response);
+                var blob = new Blob([response], {type: "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"});
+                $scope.saveAs(blob, '客户还款信息表' + '.xls');
             });
         }
     }]);
