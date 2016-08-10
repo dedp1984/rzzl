@@ -1,0 +1,69 @@
+<div class="wrapper-md">
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            信贷系统代扣明细
+        </div>
+        <div class="row wrapper">
+            <div class="col-sm-4">
+                <div class="input-group">
+                    <span class="input-group-btn">
+                        <button class="btn btn-sm btn-default" type="button" ng-click="queryChargeBack()"><i class="fa fa-search m-r-sm"></i>查找</button>
+                        <button class="btn btn-sm btn-default" type="button" ng-click="exportChargeBack()"><i class="fa fa-search m-r-sm"></i>导出</button>
+                    </span>
+                </div>
+            </div>
+        </div>
+        <div class="table-responsive">
+            <table class="table table-condensed table-hover  small b-t b-light">
+                <thead>
+                <tr>
+                    <th>申请编号</th>
+                    <th>姓名</th>
+                    <th>本金</th>
+                    <th>利息</th>
+                    <th>罚息</th>
+                    <th>扣款总额</th>
+                    <th>剩余本金</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr ng-repeat="item in items">
+                    <td>{{item.appid}}</td>
+                    <td>{{item.name}}</td>
+                    <td>{{item.bj}}</td>
+                    <td>{{item.lx}}</td>
+                    <td>{{item.fx}}</td>
+                    <td>{{item.total}}</td>
+                    <td>{{item.sybj}}</td>
+                </tr>
+                </tbody>
+            </table>
+            <table class="table" style="margin: 0px; z-index: 99;position: inherit; visibility: hidden">
+                <tfoot>
+                <tr ng-if="paginationInfo.totalItem==0">
+                    <td>
+                        无查询结果
+                    </td>
+                </tr>
+                <tr  ng-if="paginationInfo.totalItem>0">
+                    <td>
+                        <div class="pull-left m-t-lg ">
+                            总共{{paginationInfo.totalItem}}条&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 每页显示：{{paginationInfo.pageSize}}条
+                        </div>
+                    </td>
+                    <td>
+                        <div class="pull-right" style="margin-right: 0px">
+                            <uib-pagination boundary-links="true" total-items="paginationInfo.totalItem" ng-model="paginationInfo.curPage"
+                                            items-per-page="paginationInfo.pageSize" ng-change="pageChanged()"
+                                            max-size="paginationInfo.maxSize" boundary-link-numbers="true" rotate="false"
+                                            previous-text="&lsaquo;" next-text="&rsaquo;" first-text="&laquo;" last-text="&raquo;">
+                            </uib-pagination>
+                        </div>
+                    </td>
+                </tr>
+                </tfoot>
+            </table>
+        </div>
+
+    </div>
+</div>

@@ -19,8 +19,7 @@ app.directive('verifyBxf',function(){
                         parseFloat($scope.itemapp.bxf)+
                         parseFloat($scope.itemapp.ybf)+
                         parseFloat($scope.itemapp.ghf)+
-                        parseFloat($scope.itemapp.jzf)+
-                        parseFloat($scope.itemapp.gpsfee)).toFixed(2);
+                        parseFloat($scope.itemapp.jzf));
                     if(fjfhj>lcj*0.2){
                         $scope.errmsg="附加费融资总额≤裸车价*20%";
                         ngModelController.$setValidity('isOver', false);

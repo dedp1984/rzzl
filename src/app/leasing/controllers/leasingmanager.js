@@ -135,4 +135,32 @@ app.controller('leasingmanager', ['$scope', 'toaster', '$state','CarCreditRestan
                 $scope.saveAs(blob, '客户还款信息表' + '.xls');
             });
         }
+        $scope.queryWsxdIncase = function(){
+            $scope.items = CarCreditRestangular.all('queryWsxdIncaseList').getList().$object;
+        }
+        $scope.queryChargeBack = function(){
+            $scope.items = CarCreditRestangular.all('queryChargeBackList').getList().$object;
+        }
+        $scope.exportChargeBack = function(){
+            CarCreditRestangular.one("chargeback","export").withHttpConfig({responseType: 'arraybuffer'}).get().then(function(response){
+                console.log(response);
+                var blob = new Blob([response], {type: "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"});
+                $scope.saveAs(blob, '扣款明细' + '.xls');
+            });
+        }
+        $scope.exportInCaseWs = function(){
+            CarCreditRestangular.one("incase","export").withHttpConfig({responseType: 'arraybuffer'}).get().then(function(response){
+                console.log(response);
+                var blob = new Blob([response], {type: "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"});
+                $scope.saveAs(blob, '在审案件进度表' + '.xls');
+            });
+        }
+
+        $scope.exportWsxdCredit = function(){
+            CarCreditRestangular.one("creditdata","export").withHttpConfig({responseType: 'arraybuffer'}).get().then(function(response){
+                console.log(response);
+                var blob = new Blob([response], {type: "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"});
+                $scope.saveAs(blob, '征信查询表' + '.xls');
+            });
+        }
     }]);

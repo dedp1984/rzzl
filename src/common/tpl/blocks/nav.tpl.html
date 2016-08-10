@@ -33,7 +33,18 @@
       <span class="font-bold">申请单管理</span>
     </a>
   </li>
-
+  <li ui-sref-active="active" ng-if="hasPrimission('app.wsxd.incase')">
+    <a ui-sref="app.wsxd.incase">
+      <i class="glyphicon  glyphicon-list-alt icon text-info-dker"></i>
+      <span class="font-bold">信贷系统申请单查询</span>
+    </a>
+  </li>
+  <li ui-sref-active="active" ng-if="hasPrimission('app.wsxd.chargeback')">
+    <a ui-sref="app.wsxd.chargeback">
+      <i class="glyphicon  glyphicon-list-alt icon text-info-dker"></i>
+      <span class="font-bold">查询代扣明细</span>
+    </a>
+  </li>
   <li class="line dk"></li>
 
   <li class="hidden-folded padder m-t m-b-sm text-muted text-xs">

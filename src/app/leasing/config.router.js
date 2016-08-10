@@ -110,6 +110,23 @@ angular.module('app')
                   templateUrl:'app/leasing/tpl/leasing-manager-edit.html',
                   controller:'leasingController'
               })
+             //查询万穗系统在审案件表
+              .state('app.wsxd',{
+                  abstract:true,
+                  url:'/wsxd',
+                  template:'<div ui-view=""></div>'
+              })
+              .state('app.wsxd.incase',{
+                  url:'/incase',
+                  templateUrl:'app/leasing/tpl/wsxd-incase-list.html',
+                  controller:'leasingmanager'
+              })
+              .state('app.wsxd.chargeback',{
+                  url:'/chargeback',
+                  templateUrl:'app/leasing/tpl/wsxd-chargeback-list.html',
+                  controller:'leasingmanager'
+              })
+
       }
     ]
   );

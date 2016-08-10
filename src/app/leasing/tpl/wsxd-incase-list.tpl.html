@@ -1,0 +1,103 @@
+<div class="wrapper-md">
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            申请单明细
+        </div>
+        <div class="row wrapper">
+            <div class="col-sm-2">
+                <input type="date" ng-model="vm.sqfqrq" ng-required="true" class="input-sm form-control" placeholder="申请日期(必输)">
+            </div>
+
+            <div class="col-sm-4">
+                <div class="input-group">
+                    <span class="input-group-btn">
+                        <button class="btn btn-sm btn-default" type="button" ng-click="queryWsxdIncase()"><i class="fa fa-search m-r-sm"></i>查找</button>
+                    </span>
+                     <span class="input-group-btn" ng-if="hasPrimission('app.wsxd.exportCredit')">
+                        <button class="btn btn-sm btn-default" type="button" ng-click="exportWsxdCredit()"><i class="fa fa-search m-r-sm"></i>导出征信查询</button>
+                    </span>
+                    <span class="input-group-btn" ng-if="hasPrimission('app.wsxd.exportInCase')">
+                        <button class="btn btn-sm btn-default" type="button" ng-click="exportInCaseWs()"><i class="fa fa-search m-r-sm"></i>导出在审案件</button>
+                    </span>
+                </div>
+            </div>
+        </div>
+        <div class="row wrapper" ng-show="false">
+            <div class="col-sm-2">
+                <button class="btn btn-sm btn-default" type="button" ng-click="clickDownload()"> <i class="fa fa-search m-r-sm"></i>导出放款审批数据：({{selected.length}}笔)</button>
+            </div>
+            <div class="col-sm-2">
+                <button class="btn btn-sm btn-default" type="button" ng-click="exportKhhzhzb()"> <i class="fa fa-search m-r-sm"></i>导出客户还租汇总表:({{selected.length}}笔)</button>
+            </div>
+            <div class="col-sm-2">
+                <button class="btn btn-sm btn-default" type="button" ng-click="exportKhhkxxb()"> <i class="fa fa-search m-r-sm"></i>导出客户还款信息表:({{selected.length}}笔)</button>
+            </div>
+        </div>
+        <div class="table-responsive">
+            <table class="table table-condensed table-hover  small b-t b-light">
+                <thead>
+                <tr>
+                    <th width="2%"><input type="checkbox" ng-model="selectall" ng-click="selectAll()"></th>
+                    <th  width="10%">申请编号</th>
+                    <th  width="8%">等级</th>
+                    <th  width="9%">姓名</th>
+                    <th  width="7%">审核员</th>
+                    <th  width="7%">批核日期</th>
+                    <th  width="7%">审核时长</th>
+                    <th  width="7%">放款日期</th>
+                    <th  width="7%">批核金额</th>
+                    <th  width="7%">审批期限</th>
+                    <th  width="7%">首付比例</th>
+                    <th  width="7%">案件状态</th>
+                    <th  width="7%">操作</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr ng-repeat="item in items">
+                    <td><input type="checkbox" ng-model="item.checked" ng-click="addToSelected(item)"></td>
+                    <td>{{item.id}}</td>
+                    <td>{{item.custType}}</td>
+                    <td>{{item.custName}}</td>
+                    <td>{{item.shr}}</td>
+                    <td>{{item.shsj|mysqlDatetime}}</td>
+                    <td>{{item.shsc}}</td>
+                    <td>{{item.fkrq}}</td>
+                    <td>{{item.rzje}}</td>
+                    <td>{{item.rzqs1}}</td>
+                    <td>{{item.sfbl}}</td>
+                    <td>{{item.sqdzt}}</td>
+                    <td>
+                        <a ui-sref="app.manager.edit({id:item.id})"><i class="glyphicon glyphicon-edit"></i>编辑</a>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+            <table class="table" style="margin: 0px; z-index: 99;position: inherit; ">
+                <tfoot>
+                <tr ng-if="paginationInfo.totalItem==0">
+                    <td>
+                        无查询结果
+                    </td>
+                </tr>
+                <tr  ng-if="paginationInfo.totalItem>0">
+                    <td>
+                        <div class="pull-left m-t-lg ">
+                            总共{{paginationInfo.totalItem}}条&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 每页显示：{{paginationInfo.pageSize}}条
+                        </div>
+                    </td>
+                    <td>
+                        <div class="pull-right" style="margin-right: 0px">
+                            <uib-pagination boundary-links="true" total-items="paginationInfo.totalItem" ng-model="paginationInfo.curPage"
+                                            items-per-page="paginationInfo.pageSize" ng-change="pageChanged()"
+                                            max-size="paginationInfo.maxSize" boundary-link-numbers="true" rotate="false"
+                                            previous-text="&lsaquo;" next-text="&rsaquo;" first-text="&laquo;" last-text="&raquo;">
+                            </uib-pagination>
+                        </div>
+                    </td>
+                </tr>
+                </tfoot>
+            </table>
+        </div>
+
+    </div>
+</div>
